@@ -9,7 +9,7 @@ import { WeServeCitiesSection } from '@/components/local-biz/WeServeCitiesSectio
 import { JustdialHeroStrip } from '@/components/common/JustdialHeroStrip';
 import { CityScrollStrip } from '@/components/common/CityScrollStrip';
 import { SEED_PROFESSIONALS } from '@/lib/local-biz/seed-data';
-import { Sparkles, Bot } from 'lucide-react';
+import { Sparkles, Bot, ArrowRight } from 'lucide-react';
 import { TypewriterText } from '@/components/common/TypewriterText';
 import { getLocationEntry, CITY_TO_DISTRICT_MAP } from '@/lib/india';
 
@@ -874,19 +874,14 @@ export default function HomePage() {
                   </p>
                 </div>
                 <div className="relative z-10 flex items-center gap-space-md flex-wrap">
-                  <Link
-                    href="/local-biz/add-business"
-                    className="px-space-xl py-3 rounded-full bg-on-primary text-primary font-bold text-xs hover:bg-primary-fixed transition-colors shadow-md"
-                  >
-                    Add Your Business
-                  </Link>
                   <a
                     href="https://forms.gle/FVQVofUVejQ2ebiA7"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-on-primary hover:underline text-xs font-bold"
+                    className="px-space-xl py-3 rounded-full bg-on-primary text-primary font-bold text-xs hover:bg-primary-fixed transition-colors shadow-md inline-flex items-center gap-1.5"
                   >
-                    Direct Google Form (₹0) →
+                    <span>Add Your Business (Google Form ₹0)</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
               </div>

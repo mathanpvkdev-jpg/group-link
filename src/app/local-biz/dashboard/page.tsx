@@ -83,13 +83,15 @@ export default function LocalBizDashboardPage() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            <Link
-              href="/local-biz/add-business"
-              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md transition-all"
+            <a
+              href="https://forms.gle/FVQVofUVejQ2ebiA7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
-              <span>List Another Business</span>
-            </Link>
+              <span>List Another Business (Google Form)</span>
+            </a>
           </div>
         </div>
       </div>

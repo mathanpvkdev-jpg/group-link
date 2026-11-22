@@ -135,7 +135,7 @@ function PricingContent() {
         'Free forever with zero expiration',
       ],
       ctaText: 'List Business Free',
-      ctaHref: '/local-biz/add-business',
+      ctaHref: 'https://forms.gle/FVQVofUVejQ2ebiA7',
       variant: 'default',
     },
     {
@@ -351,14 +351,16 @@ function PricingContent() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <Link
-              href="/local-biz/add-business"
+            <a
+              href="https://forms.gle/FVQVofUVejQ2ebiA7"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2"
             >
               <Building2 className="w-4 h-4" />
               <span>List Your Business (100% Free)</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            </a>
             <a
               href="https://forms.gle/oZzitWMZ8xtB9rmx5"
               target="_blank"
@@ -418,13 +420,15 @@ function PricingContent() {
                   During our launch phase, all verified badges, contact links, and business promotion features are <strong>100% FREE (₹0)</strong> for every registered business. Paid subscription plans will open in a future update.
                 </p>
                 <div className="pt-2">
-                  <Link
-                    href="/local-biz/add-business"
+                  <a
+                    href="https://forms.gle/FVQVofUVejQ2ebiA7"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"
                   >
                     <span>Claim Your Free Business Listing (₹0)</span>
                     <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -790,6 +794,16 @@ function PricingContent() {
                           <span>{buttonText}</span>
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>
+                      ) : plan.ctaHref.startsWith('http') ? (
+                        <a
+                          href={plan.ctaHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 cursor-pointer"
+                        >
+                          <span>{plan.ctaText}</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </a>
                       ) : (
                         <Link
                           href={plan.ctaHref}
@@ -906,17 +920,33 @@ function PricingContent() {
                   </div>
 
                   <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
-                    <Link
-                      href={plan.ctaHref}
-                      className={`w-full py-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all ${
-                        plan.popular
-                          ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30'
-                          : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200'
-                      }`}
-                    >
-                      <span>{plan.ctaText}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+                    {plan.ctaHref.startsWith('http') ? (
+                      <a
+                        href={plan.ctaHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`w-full py-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                          plan.popular
+                            ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30'
+                            : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200'
+                        }`}
+                      >
+                        <span>{plan.ctaText}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </a>
+                    ) : (
+                      <Link
+                        href={plan.ctaHref}
+                        className={`w-full py-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all ${
+                          plan.popular
+                            ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30'
+                            : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200'
+                        }`}
+                      >
+                        <span>{plan.ctaText}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))}

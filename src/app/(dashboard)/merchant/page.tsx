@@ -15,12 +15,14 @@ export default function MerchantDashboardPage() {
             <h1 className="text-2xl font-black text-slate-900 dark:text-white">Merchant Dashboard</h1>
             <p className="text-xs text-slate-500">Manage your business listings, customer leads, and branch locations</p>
           </div>
-          <Link
-            href="/local-biz/add-business"
-            className="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 transition-colors self-start cursor-pointer shadow-sm"
+          <a
+            href="https://forms.gle/FVQVofUVejQ2ebiA7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 transition-colors self-start cursor-pointer shadow-sm inline-flex items-center gap-1.5"
           >
-            + Add New Branch
-          </Link>
+            <span>+ Add New Branch (Google Form)</span>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

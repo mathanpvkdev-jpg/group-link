@@ -15,6 +15,7 @@ import {
   Award,
   PhoneCall,
   UserCheck,
+  ArrowRight,
 } from 'lucide-react';
 import { LocalBizHeader } from '@/components/local-biz/LocalBizHeader';
 import { LocalBizFooter } from '@/components/local-biz/LocalBizFooter';
@@ -400,13 +401,16 @@ export default function ProfessionalsDirectoryPage() {
                 Get listed on India's trusted local business and specialist directory. Receive verified customer booking requests directly on WhatsApp.
               </p>
             </div>
-            <Link
-              href="/local-biz/add-business"
-              className="px-6 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-900 font-bold text-sm shrink-0 shadow-md transition-all flex items-center gap-2"
+            <a
+              href="https://forms.gle/FVQVofUVejQ2ebiA7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-900 font-bold text-sm shrink-0 shadow-md transition-all flex items-center gap-2 cursor-pointer"
             >
               <UserCheck className="w-4 h-4 text-blue-600" />
-              <span>List Your Services for Free</span>
-            </Link>
+              <span>List Your Services for Free (Google Form)</span>
+              <ArrowRight className="w-4 h-4 text-blue-600" />
+            </a>
           </div>
         </section>
       </main>

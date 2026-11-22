@@ -14,6 +14,7 @@ import {
   Users,
   SlidersHorizontal,
 } from 'lucide-react';
+import { REGISTER_BUSINESS_URL } from '@/lib/forms-config';
 
 interface JustdialHeroStripProps {
   variant?: 'home' | 'b2b' | 'local-biz' | 'professionals' | 'groups';
@@ -160,7 +161,7 @@ export const JustdialHeroStrip: React.FC<JustdialHeroStripProps> = ({
           description:
             'Join Nammabus B2B portal at ₹0 during our launch special. Showcase catalogs, wholesale MOQs, and receive high-volume bulk leads.',
           ctaText: 'List Factory Free',
-          ctaHref: '/local-biz/add-business',
+          ctaHref: REGISTER_BUSINESS_URL,
           bgGradient: 'from-emerald-950 via-teal-950 to-slate-950',
           accentColor: 'text-emerald-300',
           tag: '₹0 Zero Cost',
@@ -201,7 +202,7 @@ export const JustdialHeroStrip: React.FC<JustdialHeroStripProps> = ({
           description:
             'Expand your customer reach across India. Zero referral commission, direct customer phone calls, and trusted verification shield.',
           ctaText: 'List Your Service Free',
-          ctaHref: '/local-biz/add-business',
+          ctaHref: REGISTER_BUSINESS_URL,
           bgGradient: 'from-blue-900 via-indigo-900 to-slate-950',
           accentColor: 'text-amber-300',
           tag: '₹0 Zero Cost',
@@ -217,7 +218,7 @@ export const JustdialHeroStrip: React.FC<JustdialHeroStripProps> = ({
         description:
           'Zero commission, verified shield badge, direct WhatsApp customer leads & 6 months priority visibility for all Indian merchants.',
         ctaText: 'List Your Business Free',
-        ctaHref: '/local-biz/add-business',
+        ctaHref: REGISTER_BUSINESS_URL,
         bgGradient: 'from-blue-950 via-indigo-900 to-slate-950',
         accentColor: 'text-amber-300',
         tag: '₹0 Zero Cost',
