@@ -21,6 +21,7 @@ import { CATEGORIES, SAFE_COUNTRIES } from '@/lib/data';
 import { Platform } from '@/lib/types';
 import { GroupStore } from '@/lib/groups/store';
 import { ENABLE_GOOGLE_FORMS, FORMS_CONFIG } from '@/lib/forms-config';
+import { validateGroupInviteUrl } from '@/lib/seo-engine';
 
 export default function SubmitGroupPage() {
   const [name, setName] = useState('');
@@ -46,8 +47,9 @@ export default function SubmitGroupPage() {
       setError('Please enter your Group or Channel Name.');
       return;
     }
-    if (!inviteUrl.trim() || !inviteUrl.startsWith('http')) {
-      setError('Please enter a valid Invite Link URL starting with https://');
+    const urlCheck = validateGroupInviteUrl(inviteUrl);
+    if (!urlCheck.valid) {
+      setError(urlCheck.reason || 'Please enter a valid Invite Link URL.');
       return;
     }
     if (!description.trim()) {

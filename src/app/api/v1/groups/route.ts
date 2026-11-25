@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSuccessResponse, createErrorResponse } from '@/core/contracts/api.contract';
 import { INITIAL_GROUPS } from '@/lib/data';
+import { validateGroupInviteUrl } from '@/lib/seo-engine';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,6 +43,18 @@ export async function POST(request: NextRequest) {
         createErrorResponse(
           'VALIDATION_ERROR',
           'Missing required fields: name, platform, and inviteUrl are mandatory.',
+          requestId
+        ),
+        { status: 400 }
+      );
+    }
+
+    const urlValidation = validateGroupInviteUrl(body.inviteUrl);
+    if (!urlValidation.valid) {
+      return NextResponse.json(
+        createErrorResponse(
+          'INVALID_INVITE_URL',
+          urlValidation.reason || 'Invite link failed platform URL validation.',
           requestId
         ),
         { status: 400 }
