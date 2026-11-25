@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { edgeRateLimiter } from '@/core/security/rate-limiter';
+import { ADMIN_PORTAL_LOCKED } from '@/lib/forms-config';
 
 /**
  * Next.js 16 Request Proxy (Convention replacing legacy Middleware)
@@ -10,6 +11,20 @@ import { edgeRateLimiter } from '@/core/security/rate-limiter';
 export function proxy(request: NextRequest) {
   const requestId = crypto.randomUUID();
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || '127.0.0.1';
+  const pathname = request.nextUrl.pathname;
+
+  // Lock Admin & Moderation Portals (Auto-Admit Mode active until manual approval is enabled)
+  if (
+    ADMIN_PORTAL_LOCKED &&
+    (pathname === '/admin' ||
+      pathname.startsWith('/admin/') ||
+      pathname === '/local-biz/admin' ||
+      pathname.startsWith('/local-biz/admin/') ||
+      pathname === '/moderation' ||
+      pathname.startsWith('/moderation/'))
+  ) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 
   // Apply edge rate limiting to API routes
   if (request.nextUrl.pathname.startsWith('/api/')) {

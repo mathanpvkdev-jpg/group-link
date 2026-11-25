@@ -58,12 +58,6 @@ export default function PaidPromotionPage() {
                 Live 2-Banner Showcase
               </span>
             </div>
-            <Link
-              href="/admin?tab=paidpromotions"
-              className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
-            >
-              Admin: Edit Banners →
-            </Link>
           </div>
 
           <PaidPromotionCarousel />
@@ -92,12 +86,6 @@ export default function PaidPromotionPage() {
               <span>Book Your Banner Slot</span>
               <ArrowRight className="w-4 h-4" />
             </a>
-            <Link
-              href="/admin?tab=paidpromotions"
-              className="px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm transition-all"
-            >
-              Manage Banners in Admin
-            </Link>
           </div>
         </section>
 

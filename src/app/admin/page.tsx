@@ -7,6 +7,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { getStoredUser, storeUser } from '@/lib/auth';
+import { ADMIN_PORTAL_LOCKED } from '@/lib/forms-config';
 import { INITIAL_GROUPS, CATEGORIES, SAFE_COUNTRIES, PAID_PROMOTION_BANNERS } from '@/lib/data';
 import { Group, Category, Platform, PaidPromotionBanner } from '@/lib/types';
 import {
@@ -65,6 +66,28 @@ interface ImportRecord {
 }
 
 export default function AdminPage() {
+  if (ADMIN_PORTAL_LOCKED) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6">
+        <div className="max-w-md w-full rounded-3xl bg-slate-900 border border-slate-800 p-8 text-center space-y-4 shadow-2xl">
+          <div className="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center">
+            <ShieldCheck className="w-8 h-8" />
+          </div>
+          <h1 className="text-xl font-black">Admin Portal Currently Locked</h1>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            Auto-Admit mode is active for all group and business submissions. Manual admin approvals are disabled at this time.
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors"
+          >
+            Return to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   // ADMIN AUTHENTICATION GATE STATE
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [adminEmailInput, setAdminEmailInput] = useState('');

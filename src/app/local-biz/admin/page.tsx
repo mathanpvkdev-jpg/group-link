@@ -29,8 +29,30 @@ import { LocalBizStore } from '@/lib/local-biz/store';
 import { Business, Enquiry, Review } from '@/types/local-biz';
 import { SEED_CATEGORIES, SEED_CITIES } from '@/lib/local-biz/seed-data';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { ADMIN_PORTAL_LOCKED } from '@/lib/forms-config';
 
 export default function LocalBizAdminPage() {
+  if (ADMIN_PORTAL_LOCKED) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6">
+        <div className="max-w-md w-full rounded-3xl bg-slate-900 border border-slate-800 p-8 text-center space-y-4 shadow-2xl">
+          <div className="w-14 h-14 rounded-2xl bg-blue-500/20 text-blue-400 mx-auto flex items-center justify-center">
+            <ShieldCheck className="w-8 h-8" />
+          </div>
+          <h1 className="text-xl font-black">Business Admin Portal Locked</h1>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            Direct Auto-Admit mode is active for all business listings. Admin moderation is currently locked.
+          </p>
+          <Link
+            href="/local-biz"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors"
+          >
+            Back to Business Directory
+          </Link>
+        </div>
+      </div>
+    );
+  }
   const [activeTab, setActiveTab] = useState<'businesses' | 'reviews' | 'enquiries' | 'analytics' | 'database'>('businesses');
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);

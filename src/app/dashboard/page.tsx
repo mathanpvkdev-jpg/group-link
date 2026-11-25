@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { PaidPromotionCarousel } from '@/components/PaidPromotionCarousel';
 import { UserProfile, Group } from '@/lib/types';
 import { INITIAL_GROUPS } from '@/lib/data';
+import { ADMIN_PORTAL_LOCKED } from '@/lib/forms-config';
 import {
   User,
   Zap,
@@ -127,7 +128,7 @@ export default function UserDashboardPage() {
                 </p>
               </div>
 
-              {user.role === 'admin' && (
+              {!ADMIN_PORTAL_LOCKED && user?.role === 'admin' && (
                 <Link
                   href="/admin"
                   className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-md flex items-center gap-1.5"

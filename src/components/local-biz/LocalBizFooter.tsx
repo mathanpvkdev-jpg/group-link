@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Building2, MapPin, Phone, Mail, ShieldCheck, ArrowRight, Heart } from 'lucide-react';
 import { SEED_CITIES, SEED_CATEGORIES } from '@/lib/local-biz/seed-data';
 import { WeServeCitiesSection } from './WeServeCitiesSection';
-import { REGISTER_BUSINESS_URL } from '@/lib/forms-config';
+import { REGISTER_BUSINESS_URL, ADMIN_PORTAL_LOCKED } from '@/lib/forms-config';
 
 export const LocalBizFooter: React.FC = () => {
   return (
@@ -138,11 +138,13 @@ export const LocalBizFooter: React.FC = () => {
                   Business Dashboard
                 </Link>
               </li>
-              <li>
-                <Link href="/local-biz/admin" className="hover:text-white transition-colors">
-                  Admin Portal
-                </Link>
-              </li>
+              {!ADMIN_PORTAL_LOCKED && (
+                <li>
+                  <Link href="/local-biz/admin" className="hover:text-white transition-colors">
+                    Admin Portal
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
                   About Us

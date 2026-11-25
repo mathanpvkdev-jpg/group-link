@@ -6,6 +6,8 @@
  */
 
 export const ENABLE_GOOGLE_FORMS = false;
+export const ADMIN_PORTAL_LOCKED = true;
+export const AUTO_ADMIT_SUBMISSIONS = true;
 
 export const FORMS_CONFIG = {
   // Social Media Group Directory Submission (WhatsApp / Telegram / Arattai / Instagram)

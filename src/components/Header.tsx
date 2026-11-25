@@ -32,7 +32,7 @@ import { SEED_CITIES } from '@/lib/local-biz/seed-data';
 import { STATES, UNION_TERRITORIES, ALL_INDIA_LOCATIONS, getDistrictsForState } from '@/lib/india';
 import { MobileBottomNav } from './MobileBottomNav';
 import { BusinessAnnouncementBanner } from './BusinessAnnouncementBanner';
-import { REGISTER_BUSINESS_URL, SUBMIT_GROUP_URL } from '@/lib/forms-config';
+import { REGISTER_BUSINESS_URL, SUBMIT_GROUP_URL, ADMIN_PORTAL_LOCKED } from '@/lib/forms-config';
 
 export const Header: React.FC = () => {
   return (
@@ -388,7 +388,7 @@ function HeaderContent() {
                       <span>User Profile &amp; Saved</span>
                     </Link>
 
-                    {user.role === 'admin' && (
+                    {!ADMIN_PORTAL_LOCKED && user.role === 'admin' && (
                       <Link
                         href="/local-biz/admin"
                         onClick={() => setUserDropdownOpen(false)}

@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Lifecycle state is always 'pending' until moderated
+    // Auto-admit directly until manual admin approvals are enabled
     const newGroup = {
       id: `grp-${Date.now()}`,
       name: body.name,
@@ -56,9 +56,9 @@ export async function POST(request: NextRequest) {
       platform: body.platform,
       inviteUrl: body.inviteUrl,
       category: body.category || 'Technology',
-      status: 'pending',
+      status: 'approved',
       memberCount: 1,
-      isVerified: false,
+      isVerified: true,
       createdAt: new Date().toISOString(),
     };
 
