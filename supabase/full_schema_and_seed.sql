@@ -101,6 +101,8 @@ CREATE TABLE IF NOT EXISTS public.businesses (
   is_featured BOOLEAN DEFAULT FALSE NOT NULL,
   is_active BOOLEAN DEFAULT TRUE NOT NULL,
   views_count INT DEFAULT 0 NOT NULL,
+  rating NUMERIC(3, 2) DEFAULT 0.00 NOT NULL,
+  reviews_count INT DEFAULT 0 NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
@@ -187,7 +189,7 @@ CREATE TABLE IF NOT EXISTS public.enquiries (
 -- 14. REVIEWS TABLE
 CREATE TABLE IF NOT EXISTS public.reviews (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  customer_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
+  customer_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
   business_id UUID REFERENCES public.businesses(id) ON DELETE CASCADE NOT NULL,
   rating INT CHECK (rating >= 1 AND rating <= 5) NOT NULL,
   title VARCHAR(255) NOT NULL,
@@ -555,6 +557,11 @@ INSERT INTO public.subcategories (category_id, name, slug, is_active)
 SELECT id, 'SEO & Performance Lead Generation', 'seo-lead-gen', true
 FROM public.categories WHERE slug = 'digital-marketing'
 ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name;
+
+-- 3.5 SEED DEFAULT VERIFIED REVIEWER PROFILE
+INSERT INTO public.profiles (id, user_id, full_name, email, role, status)
+VALUES ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'Verified Customer', 'reviewer@nammabus.in', 'customer', 'active')
+ON CONFLICT (id) DO NOTHING;
 
 -- 4. SEED BUSINESSES (30 Verified Indian Enterprises Across All 15 Cities)
 INSERT INTO public.businesses (
@@ -2066,7 +2073,7 @@ INSERT INTO public.services (
 INSERT INTO public.reviews (
   customer_id, business_id, rating, title, comment, status
 ) VALUES (
-  uuid_generate_v4(),
+  '00000000-0000-0000-0000-000000000001',
   (SELECT id FROM public.businesses WHERE slug = 'chennai-tech-solutions' LIMIT 1),
   5,
   'Exceptional Cloud & Web Engineering Team',
@@ -2076,7 +2083,7 @@ INSERT INTO public.reviews (
 INSERT INTO public.reviews (
   customer_id, business_id, rating, title, comment, status
 ) VALUES (
-  uuid_generate_v4(),
+  '00000000-0000-0000-0000-000000000001',
   (SELECT id FROM public.businesses WHERE slug = 'chennai-tech-solutions' LIMIT 1),
   5,
   'Flawless AWS Cloud Migration',
@@ -2086,7 +2093,7 @@ INSERT INTO public.reviews (
 INSERT INTO public.reviews (
   customer_id, business_id, rating, title, comment, status
 ) VALUES (
-  uuid_generate_v4(),
+  '00000000-0000-0000-0000-000000000001',
   (SELECT id FROM public.businesses WHERE slug = 'sri-lakshmi-traders' LIMIT 1),
   5,
   'Reliable Bulk FMCG Supplier',
@@ -2096,7 +2103,7 @@ INSERT INTO public.reviews (
 INSERT INTO public.reviews (
   customer_id, business_id, rating, title, comment, status
 ) VALUES (
-  uuid_generate_v4(),
+  '00000000-0000-0000-0000-000000000001',
   (SELECT id FROM public.businesses WHERE slug = 'royal-chettinad-spice-restaurant' LIMIT 1),
   5,
   'Best Chettinad Biryani in Tamil Nadu',
@@ -2106,7 +2113,7 @@ INSERT INTO public.reviews (
 INSERT INTO public.reviews (
   customer_id, business_id, rating, title, comment, status
 ) VALUES (
-  uuid_generate_v4(),
+  '00000000-0000-0000-0000-000000000001',
   (SELECT id FROM public.businesses WHERE slug = 'apollo-lifeline-clinic-coimbatore' LIMIT 1),
   5,
   'Superb Medical Care & Fast Diagnostics',
@@ -2116,7 +2123,7 @@ INSERT INTO public.reviews (
 INSERT INTO public.reviews (
   customer_id, business_id, rating, title, comment, status
 ) VALUES (
-  uuid_generate_v4(),
+  '00000000-0000-0000-0000-000000000001',
   (SELECT id FROM public.businesses WHERE slug = 'sungrid-solar-power-bangalore' LIMIT 1),
   5,
   'Cut our factory electricity bill by 75%',
@@ -2126,7 +2133,7 @@ INSERT INTO public.reviews (
 INSERT INTO public.reviews (
   customer_id, business_id, rating, title, comment, status
 ) VALUES (
-  uuid_generate_v4(),
+  '00000000-0000-0000-0000-000000000001',
   (SELECT id FROM public.businesses WHERE slug = 'tiruppur-export-cotton-garments' LIMIT 1),
   5,
   'Best Quality Export Cotton Tees',
@@ -2136,7 +2143,7 @@ INSERT INTO public.reviews (
 INSERT INTO public.reviews (
   customer_id, business_id, rating, title, comment, status
 ) VALUES (
-  uuid_generate_v4(),
+  '00000000-0000-0000-0000-000000000001',
   (SELECT id FROM public.businesses WHERE slug = 'kochi-digital-performance-hub' LIMIT 1),
   5,
   'Doubled our inbound organic leads',
@@ -2167,3 +2174,10 @@ INSERT INTO public.banners (
   true,
   2
 );
+
+-- 9. GRANT PRIVILEGES TO ANON AND AUTHENTICATED ROLES
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO anon, authenticated;
+
