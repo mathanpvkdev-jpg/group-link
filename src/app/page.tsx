@@ -874,15 +874,16 @@ export default function HomePage() {
                   </p>
                 </div>
                 <div className="relative z-10 flex items-center gap-space-md flex-wrap">
-                  <a
-                    href="https://forms.gle/FVQVofUVejQ2ebiA7"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/local-biz/add-business"
                     className="px-space-xl py-3 rounded-full bg-on-primary text-primary font-bold text-xs hover:bg-primary-fixed transition-colors shadow-md inline-flex items-center gap-1.5"
                   >
-                    <span>Add Your Business (Google Form ₹0)</span>
+                    <span>Add Your Business Free (₹0)</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
+                  </Link>
+                  <Link href="/local-biz" className="text-on-primary hover:underline text-xs font-bold">
+                    Browse Directory →
+                  </Link>
                 </div>
               </div>
 
@@ -897,18 +898,16 @@ export default function HomePage() {
                     Share Your Chat Group Links
                   </h3>
                   <p className="text-secondary-fixed-dim text-xs sm:text-sm max-w-md">
-                    Submit your WhatsApp, Telegram, or Arattai community links to gain engaged, authentic members right away.
+                    Submit your WhatsApp, Telegram, or Arattai community links directly to gain engaged, authentic members right away.
                   </p>
                 </div>
                 <div className="relative z-10 flex items-center gap-space-md flex-wrap">
-                  <a
-                    href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/submit-group"
                     className="px-space-xl py-3 rounded-full bg-on-secondary text-secondary font-bold text-xs hover:bg-secondary-fixed transition-colors shadow-md inline-block"
                   >
-                    Submit Group Link
-                  </a>
+                    Add Group Link Free
+                  </Link>
                   <Link href="/groups" className="text-on-secondary hover:underline text-xs font-bold">
                     Explore Directory →
                   </Link>

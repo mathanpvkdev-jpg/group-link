@@ -32,7 +32,7 @@ import { SEED_CITIES } from '@/lib/local-biz/seed-data';
 import { STATES, UNION_TERRITORIES, ALL_INDIA_LOCATIONS, getDistrictsForState } from '@/lib/india';
 import { MobileBottomNav } from './MobileBottomNav';
 import { BusinessAnnouncementBanner } from './BusinessAnnouncementBanner';
-import { REGISTER_BUSINESS_URL } from '@/lib/forms-config';
+import { REGISTER_BUSINESS_URL, SUBMIT_GROUP_URL } from '@/lib/forms-config';
 
 export const Header: React.FC = () => {
   return (
@@ -697,15 +697,13 @@ function HeaderContent() {
 
                 {/* Right: + Submit Group CTA */}
                 <div className="shrink-0">
-                  <a
-                    href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={SUBMIT_GROUP_URL}
                     className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl text-xs sm:text-sm font-black bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white shadow-sm shadow-emerald-600/25 hover:scale-105 active:scale-95 transition-all cursor-pointer"
                   >
                     <PlusCircle className="w-4 h-4 text-emerald-200" />
                     <span>Submit Group (Free)</span>
-                  </a>
+                  </Link>
                 </div>
               </>
             ) : (
@@ -1148,15 +1146,13 @@ function HeaderContent() {
 
                 {/* Right: + List Free (₹0) CTA */}
                 <div className="shrink-0">
-                  <a
+                  <Link
                     href={REGISTER_BUSINESS_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl text-xs sm:text-sm font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white shadow-sm shadow-blue-600/25 hover:scale-105 active:scale-95 transition-all cursor-pointer"
                   >
                     <PlusCircle className="w-4 h-4 text-blue-200" />
                     <span>List Free (₹0)</span>
-                  </a>
+                  </Link>
                 </div>
               </>
             )}
@@ -1352,16 +1348,14 @@ function HeaderContent() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-                  <a
-                    href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={SUBMIT_GROUP_URL}
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/30 cursor-pointer"
                   >
                     <PlusCircle className="w-4 h-4" />
                     <span>Submit Your Group Link (Free)</span>
-                  </a>
+                  </Link>
                 </div>
               </>
             ) : (
@@ -1490,16 +1484,14 @@ function HeaderContent() {
 
                 {/* Mobile CTA */}
                 <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
-                  <a
+                  <Link
                     href={REGISTER_BUSINESS_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/30 cursor-pointer"
                   >
                     <PlusCircle className="w-4 h-4" />
                     <span>List Your Business For Free (₹0)</span>
-                  </a>
+                  </Link>
                 </div>
               </>
             )}

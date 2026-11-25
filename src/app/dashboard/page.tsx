@@ -223,15 +223,13 @@ export default function UserDashboardPage() {
                   </p>
                 </div>
 
-                <a
-                  href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/submit-group"
                   className="px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 shadow-md flex items-center gap-1.5"
                 >
                   <PlusCircle className="w-4 h-4" />
                   <span>+ Add New Group Free</span>
-                </a>
+                </Link>
               </div>
 
               <div className="overflow-x-auto">

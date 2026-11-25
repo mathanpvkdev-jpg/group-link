@@ -28,15 +28,13 @@ export const LocalBizFooter: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center gap-3 shrink-0">
-            <a
+            <Link
               href={REGISTER_BUSINESS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
               className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center gap-1.5"
             >
               <span>List Your Business Free</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </a>
+            </Link>
             <Link
               href="/local-biz/enquiry"
               className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition-all"
@@ -128,14 +126,12 @@ export const LocalBizFooter: React.FC = () => {
             <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">For Businesses</h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <a
+                <Link
                   href={REGISTER_BUSINESS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                 >
                   Register Business
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/local-biz/dashboard" className="hover:text-white transition-colors">

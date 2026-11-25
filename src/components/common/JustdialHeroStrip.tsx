@@ -14,7 +14,7 @@ import {
   Users,
   SlidersHorizontal,
 } from 'lucide-react';
-import { REGISTER_BUSINESS_URL } from '@/lib/forms-config';
+import { REGISTER_BUSINESS_URL, SUBMIT_GROUP_URL } from '@/lib/forms-config';
 
 interface JustdialHeroStripProps {
   variant?: 'home' | 'b2b' | 'local-biz' | 'professionals' | 'groups';
@@ -96,7 +96,7 @@ export const JustdialHeroStrip: React.FC<JustdialHeroStripProps> = ({
           description:
             'Submit your community chat link, channel, or broadcast group for instant indexing. Get real, targeted members from your city and topic with 0 fees.',
           ctaText: 'Share Your Group Free (+)',
-          ctaHref: 'https://forms.gle/oZzitWMZ8xtB9rmx5',
+          ctaHref: SUBMIT_GROUP_URL,
           bgGradient: 'from-emerald-950 via-teal-900 to-slate-950',
           accentColor: 'text-emerald-300',
           tag: '₹0 Free Forever',
@@ -120,7 +120,7 @@ export const JustdialHeroStrip: React.FC<JustdialHeroStripProps> = ({
           description:
             'Expand your subscriber reach on WhatsApp Communities, Telegram Channels, Discord Servers, and Arattai Groups. Instant public exposure with zero commission.',
           ctaText: 'Submit Group Free (+)',
-          ctaHref: 'https://forms.gle/oZzitWMZ8xtB9rmx5',
+          ctaHref: SUBMIT_GROUP_URL,
           bgGradient: 'from-blue-950 via-sky-900 to-slate-950',
           accentColor: 'text-amber-300',
           tag: 'Instant Indexing',

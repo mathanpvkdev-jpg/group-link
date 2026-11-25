@@ -86,23 +86,26 @@ class LocalBizStoreClass {
   }
 
   private enrichBusiness(b: Business): Business {
+    const cityNameSafe = b.city_name || 'Chennai';
+    const catNameSafe = b.category_name || 'Local Services';
+
     const city = this.cities.find(
-      (c) => c.id === b.city_id || c.name.toLowerCase() === b.city_name.toLowerCase() || c.slug === b.city_name.toLowerCase()
+      (c) => c.id === b.city_id || c.name.toLowerCase() === cityNameSafe.toLowerCase() || c.slug === cityNameSafe.toLowerCase()
     ) || {
-      id: b.city_id,
-      name: b.city_name,
-      slug: b.city_name.toLowerCase().replace(/\s+/g, '-'),
-      state: b.state,
+      id: b.city_id || 'city-1',
+      name: cityNameSafe,
+      slug: cityNameSafe.toLowerCase().replace(/\s+/g, '-'),
+      state: b.state || 'India',
       country: 'India',
       is_active: true,
     };
 
     const category = this.categories.find(
-      (cat) => cat.id === b.category_id || cat.name.toLowerCase() === b.category_name.toLowerCase() || cat.slug === b.category_name.toLowerCase()
+      (cat) => cat.id === b.category_id || cat.name.toLowerCase() === catNameSafe.toLowerCase() || cat.slug === catNameSafe.toLowerCase()
     ) || {
-      id: b.category_id,
-      name: b.category_name,
-      slug: b.category_name.toLowerCase().replace(/\s+/g, '-'),
+      id: b.category_id || 'cat-1',
+      name: catNameSafe,
+      slug: catNameSafe.toLowerCase().replace(/\s+/g, '-'),
       icon: '🏢',
       is_active: true,
       sort_order: 1,
@@ -110,6 +113,8 @@ class LocalBizStoreClass {
 
     return {
       ...b,
+      city_name: cityNameSafe,
+      category_name: catNameSafe,
       city,
       category,
     };
@@ -163,29 +168,34 @@ class LocalBizStoreClass {
   }): Promise<Business[]> {
     this.initStore();
 
+    let combinedPool: Business[] = [...this.businesses];
+
     if (isSupabaseConfigured && supabase) {
       try {
-        let query = supabase.from('businesses').select('*');
-        const qVal = params?.q || params?.search;
-        if (qVal) query = query.ilike('name', `%${qVal}%`);
-        const cityVal = params?.city || params?.city_slug;
-        if (cityVal) query = query.eq('city_name', cityVal);
-        if (params?.state) query = query.ilike('state', `%${params.state}%`);
-        const catVal = params?.category || params?.category_slug;
-        if (catVal) query = query.eq('category_name', catVal);
-        if (params?.verified || params?.verified_only) query = query.eq('verification_status', 'verified');
-        if (params?.featured || params?.is_featured) query = query.eq('is_featured', true);
+        const { data, error } = await supabase
+          .from('businesses')
+          .select('*')
+          .eq('is_active', true)
+          .order('created_at', { ascending: false })
+          .limit(200);
 
-        const { data, error } = await query;
         if (!error && data && data.length > 0) {
-          return (data as Business[]).map((b) => this.enrichBusiness(b));
+          const seenSlugs = new Set<string>();
+          const merged: Business[] = [];
+          for (const b of [...(data as Business[]), ...this.businesses]) {
+            if (!seenSlugs.has(b.slug)) {
+              seenSlugs.add(b.slug);
+              merged.push(b);
+            }
+          }
+          combinedPool = merged;
         }
       } catch (e) {
         // Fallback to local store
       }
     }
 
-    let results = [...this.businesses];
+    let results = combinedPool;
     if (params?.is_active !== false) {
       results = results.filter((b) => b.is_active);
     }
@@ -368,7 +378,70 @@ class LocalBizStoreClass {
 
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('businesses').insert([newBiz]);
+        // Resolve real UUIDs from Supabase cities/categories if present, else nullable
+        let dbCityId: string | null = null;
+        let dbCategoryId: string | null = null;
+
+        try {
+          const { data: cityMatch } = await supabase
+            .from('cities')
+            .select('id')
+            .ilike('name', newBiz.city_name)
+            .limit(1)
+            .single();
+          if (cityMatch?.id) dbCityId = cityMatch.id;
+
+          const { data: catMatch } = await supabase
+            .from('categories')
+            .select('id')
+            .ilike('name', newBiz.category_name)
+            .limit(1)
+            .single();
+          if (catMatch?.id) dbCategoryId = catMatch.id;
+        } catch (lookupErr) {}
+
+        const { data: inserted, error } = await supabase
+          .from('businesses')
+          .insert([
+            {
+              name: newBiz.name,
+              slug: newBiz.slug,
+              description: newBiz.description,
+              short_description: newBiz.short_description,
+              logo_url: newBiz.logo_url,
+              cover_image_url: newBiz.cover_image_url,
+              phone: newBiz.phone,
+              whatsapp: newBiz.whatsapp,
+              email: newBiz.email,
+              website: newBiz.website || null,
+              address: newBiz.address,
+              area: newBiz.area,
+              city_id: dbCityId,
+              city_name: newBiz.city_name,
+              state: newBiz.state,
+              pincode: newBiz.pincode,
+              category_id: dbCategoryId,
+              category_name: newBiz.category_name,
+              business_type: newBiz.business_type,
+              year_established: newBiz.year_established,
+              gst_number: newBiz.gst_number || null,
+              status: 'approved',
+              verification_status: 'verified',
+              is_featured: false,
+              is_active: true,
+              rating: 5.0,
+              reviews_count: 0,
+            },
+          ])
+          .select()
+          .single();
+
+        if (!error && inserted) {
+          return this.enrichBusiness(inserted as Business);
+        }
+        if (error) {
+          console.warn('Supabase insert business warning:', error.message);
+        }
       } catch (e) {
         console.error('Supabase insert business error:', e);
       }

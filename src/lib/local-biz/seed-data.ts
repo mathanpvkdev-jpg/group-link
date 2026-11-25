@@ -1164,7 +1164,7 @@ export const SEED_BANNERS: Banner[] = [
     subtitle: 'Connect directly with verified manufacturers, retail customers, and commercial partners across 15+ major cities.',
     image_url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80',
     button_text: 'List Your Business Free',
-    button_url: 'https://forms.gle/FVQVofUVejQ2ebiA7',
+    button_url: '/local-biz/add-business',
     is_active: true,
     sort_order: 1,
     created_at: '2024-01-01T00:00:00Z',

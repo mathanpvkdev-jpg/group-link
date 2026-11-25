@@ -105,10 +105,8 @@ export const MobileBottomNav: React.FC = () => {
         </Link>
 
         {/* 5. Submit Group Tab */}
-        <a
-          href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/submit-group"
           className="flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all cursor-pointer min-h-[48px] text-emerald-600 dark:text-emerald-400 font-bold active:scale-95"
         >
           <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-500 text-white flex items-center justify-center shadow-sm">
@@ -117,7 +115,7 @@ export const MobileBottomNav: React.FC = () => {
           <span className="text-[10px] tracking-tight mt-0.5 leading-none font-black text-emerald-600 dark:text-emerald-400">
             Submit
           </span>
-        </a>
+        </Link>
       </div>
     </nav>
   );

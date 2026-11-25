@@ -84,12 +84,10 @@ export const BusinessAnnouncementBanner: React.FC = () => {
           />
 
           {/* Marquee Track: Entire Ticker is Clickable */}
-          <a
+          <Link
             href={REGISTER_BUSINESS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
             className="flex w-max animate-business-marquee group-hover/banner:[animation-play-state:paused] focus-visible:[animation-play-state:paused] gap-8 items-center cursor-pointer text-xs sm:text-sm py-1"
-            title="Click to register your business for free on Google Form"
+            title="Click to register your business for free on our website"
           >
             {/* Loop Group 1 */}
             <div className="flex items-center gap-6 shrink-0">
@@ -100,7 +98,7 @@ export const BusinessAnnouncementBanner: React.FC = () => {
             <div className="flex items-center gap-6 shrink-0" aria-hidden="true">
               {items}
             </div>
-          </a>
+          </Link>
 
           {/* Right Gradient Fade Mask */}
           <div
@@ -111,17 +109,15 @@ export const BusinessAnnouncementBanner: React.FC = () => {
 
         {/* Right CTA Button */}
         <div className="shrink-0 z-20">
-          <a
+          <Link
             href={REGISTER_BUSINESS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-[11px] sm:text-xs shadow-md shadow-emerald-500/25 hover:scale-105 active:scale-95 transition-all whitespace-nowrap cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-slate-950 hidden sm:inline" />
             <span className="hidden sm:inline">List Your Business Free</span>
             <span className="sm:hidden">List Free (₹0)</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
     </aside>

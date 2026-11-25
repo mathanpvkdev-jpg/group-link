@@ -617,10 +617,10 @@ export const PAID_PROMOTION_BANNERS: PaidPromotionBanner[] = [
     targetCity: 'Bengaluru',
     targetCategory: 'Technology',
     sponsorName: 'GroupHub Media Desk',
-    linkUrl: 'https://forms.gle/oZzitWMZ8xtB9rmx5',
+    linkUrl: '/submit-group',
     badgeText: '🚀 INSTAGRAM CREATOR REACH',
     priceTag: 'Verified Creator Promotion',
-    websiteUrl: 'https://forms.gle/oZzitWMZ8xtB9rmx5',
+    websiteUrl: '/submit-group',
     arattaiUrl: 'https://arattai.in',
     whatsappUrl: 'https://chat.whatsapp.com/invite/bangalore-creators-club',
     telegramUrl: 'https://t.me/indian_creators_hub',
@@ -713,7 +713,7 @@ export const BLOG_POSTS: BlogPost[] = [
       { anchor: 'Explore WhatsApp Group Links Directory', href: '/whatsapp' },
       { anchor: 'Discover Telegram Group & Channel Links', href: '/telegram' },
       { anchor: 'Browse All Community Groups by Category & City', href: '/groups' },
-      { anchor: 'Post & Submit Your Group Free', href: 'https://forms.gle/oZzitWMZ8xtB9rmx5' },
+      { anchor: 'Post & Submit Your Group Free', href: '/submit-group' },
       { anchor: 'Nammabus Marketplace & Verified Suppliers', href: '/local-biz' },
       { anchor: 'VIP Group Promotion & Billboard Advertising', href: '/paid-promotion' }
     ],
@@ -862,7 +862,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <li>Write a clear group name, guidelines, and description.</li>
         <li>Define acceptable content and strictly penalize spammers.</li>
         <li>Periodically reset your invite link if spambots enter.</li>
-        <li><a href="https://forms.gle/oZzitWMZ8xtB9rmx5" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 font-bold underline">Submit your group to GroupHub</a> to reach thousands of genuine, targeted members across India.</li>
+        <li><a href="/submit-group" class="text-emerald-600 dark:text-emerald-400 font-bold underline">Submit your group to GroupHub</a> to reach thousands of genuine, targeted members across India.</li>
       </ul>
     `
   },
@@ -944,7 +944,7 @@ export const BLOG_POSTS: BlogPost[] = [
       { anchor: 'Discover Verified Telegram Channels & Groups', href: '/telegram' },
       { anchor: 'Browse Student & Competitive Exam Communities', href: '/groups' },
       { anchor: 'Active WhatsApp Group Links Directory India', href: '/blog/whatsapp-group-links-india' },
-      { anchor: 'Post & Submit Your Telegram Channel Free', href: 'https://forms.gle/oZzitWMZ8xtB9rmx5' },
+      { anchor: 'Post & Submit Your Telegram Channel Free', href: '/submit-group' },
       { anchor: 'VIP Channel Promotion & Billboard Ads', href: '/paid-promotion' },
       { anchor: 'Nammabus Coaching & Training Institutes', href: '/local-biz' }
     ],
@@ -1189,7 +1189,7 @@ export const BLOG_POSTS: BlogPost[] = [
       { anchor: 'Browse All Community Groups by Category & City', href: '/groups' },
       { anchor: 'State & City Wise WhatsApp Directory India', href: '/blog/whatsapp-group-links-india' },
       { anchor: 'Top Telegram Channels for Competitive Exams', href: '/blog/telegram-channels-competitive-exams' },
-      { anchor: 'Post & Submit Your Job Recruitment Group Free', href: 'https://forms.gle/oZzitWMZ8xtB9rmx5' },
+      { anchor: 'Post & Submit Your Job Recruitment Group Free', href: '/submit-group' },
       { anchor: 'VIP Job Channel Promotion & Billboard Ads', href: '/paid-promotion' },
       { anchor: 'Nammabus Enterprise & Placement Agency Directory', href: '/local-biz' }
     ],
@@ -1389,7 +1389,7 @@ export const BLOG_POSTS: BlogPost[] = [
       { anchor: 'Best WhatsApp & Telegram Job Alert Groups', href: '/blog/whatsapp-telegram-job-alert-groups' },
       { anchor: 'Top Telegram Channels for Competitive Exams', href: '/blog/telegram-channels-competitive-exams' },
       { anchor: 'State & City Wise WhatsApp Directory India', href: '/blog/whatsapp-group-links-india' },
-      { anchor: 'Post & Submit Your Financial Group Free', href: 'https://forms.gle/oZzitWMZ8xtB9rmx5' },
+      { anchor: 'Post & Submit Your Financial Group Free', href: '/submit-group' },
       { anchor: 'Nammabus Financial Consultants & CA Directory', href: '/local-biz' }
     ],
     content: `
@@ -1564,7 +1564,7 @@ export const BLOG_POSTS: BlogPost[] = [
       { anchor: 'Top Telegram Channels for Competitive Exams', href: '/blog/telegram-channels-competitive-exams' },
       { anchor: 'Best WhatsApp & Telegram Job Alert Groups', href: '/blog/whatsapp-telegram-job-alert-groups' },
       { anchor: 'State & City Wise WhatsApp Directory India', href: '/blog/whatsapp-group-links-india' },
-      { anchor: 'Post & Submit Your College Study Group Free', href: 'https://forms.gle/oZzitWMZ8xtB9rmx5' },
+      { anchor: 'Post & Submit Your College Study Group Free', href: '/submit-group' },
       { anchor: 'Nammabus Educational Bookstores & Printing Services', href: '/local-biz' }
     ],
     content: `

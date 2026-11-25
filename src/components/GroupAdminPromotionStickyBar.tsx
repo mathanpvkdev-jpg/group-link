@@ -66,16 +66,14 @@ export const GroupAdminPromotionStickyBar: React.FC = () => {
 
         {/* CTA Buttons */}
         <div className="flex items-center gap-2 pt-1">
-          <a
-            href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/submit-group"
             className="flex-1 py-2 px-3.5 rounded-xl text-xs font-black text-slate-950 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 shadow-md shadow-emerald-500/20 text-center flex items-center justify-center gap-1.5 transition-all hover:scale-[1.02]"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Promote Your Group Free</span>
             <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          </Link>
 
           <Link
             href="/promote"

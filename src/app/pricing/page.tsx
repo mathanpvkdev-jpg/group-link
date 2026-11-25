@@ -135,7 +135,7 @@ function PricingContent() {
         'Free forever with zero expiration',
       ],
       ctaText: 'List Business Free',
-      ctaHref: 'https://forms.gle/FVQVofUVejQ2ebiA7',
+      ctaHref: '/local-biz/add-business',
       variant: 'default',
     },
     {
@@ -259,7 +259,7 @@ function PricingContent() {
         'Community safety spam moderation',
       ],
       ctaText: 'Post Group Free',
-      ctaHref: 'https://forms.gle/oZzitWMZ8xtB9rmx5',
+      ctaHref: '/submit-group',
     },
     {
       name: 'Featured Group (VIP)',
@@ -351,26 +351,22 @@ function PricingContent() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <a
-              href="https://forms.gle/FVQVofUVejQ2ebiA7"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/local-biz/add-business"
               className="px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2"
             >
               <Building2 className="w-4 h-4" />
               <span>List Your Business (100% Free)</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-            <a
-              href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-              target="_blank"
-              rel="noopener noreferrer"
+            </Link>
+            <Link
+              href="/submit-group"
               className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2"
             >
               <Users className="w-4 h-4" />
               <span>Submit Your Group (100% Free)</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </a>
+            </Link>
           </div>
 
           {/* Product Category Tabs */}
@@ -420,15 +416,13 @@ function PricingContent() {
                   During our launch phase, all verified badges, contact links, and business promotion features are <strong>100% FREE (₹0)</strong> for every registered business. Paid subscription plans will open in a future update.
                 </p>
                 <div className="pt-2">
-                  <a
-                    href="https://forms.gle/FVQVofUVejQ2ebiA7"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/local-biz/add-business"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"
                   >
                     <span>Claim Your Free Business Listing (₹0)</span>
                     <ArrowRight className="w-4 h-4" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -860,15 +854,13 @@ function PricingContent() {
                   During our founding launch, all group submissions and directory placements across WhatsApp, Telegram, and Arattai are <strong>100% FREE (₹0)</strong>. Paid promotion tiers will open in a future update.
                 </p>
                 <div className="pt-2">
-                  <a
-                    href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/submit-group"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"
                   >
                     <span>Submit Your Group Free (₹0)</span>
                     <ArrowRight className="w-4 h-4" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

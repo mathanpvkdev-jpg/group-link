@@ -11,6 +11,7 @@ import { PaidPromotionCarousel } from '@/components/PaidPromotionCarousel';
 import { TopScrollDownBanner, BottomJoinSection } from '@/components/ScrollDownJoinHelper';
 import { ContextualSafetyBanner } from '@/components/ContextualSafetyBanner';
 import { INITIAL_GROUPS } from '@/lib/data';
+import { GroupStore } from '@/lib/groups/store';
 import {
   MessageSquare,
   ShieldCheck,
@@ -35,7 +36,9 @@ interface GroupPageProps {
 
 export async function generateMetadata({ params }: GroupPageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const group = INITIAL_GROUPS.find((g) => g.slug === resolvedParams.slug);
+  const group =
+    INITIAL_GROUPS.find((g) => g.slug === resolvedParams.slug) ||
+    (await GroupStore.getGroupBySlug(resolvedParams.slug));
 
   if (!group) return { title: 'Group Not Found | GroupHub' };
 
@@ -55,7 +58,9 @@ export async function generateMetadata({ params }: GroupPageProps): Promise<Meta
 
 export default async function GroupDetailPage({ params }: GroupPageProps) {
   const resolvedParams = await params;
-  const group = INITIAL_GROUPS.find((g) => g.slug === resolvedParams.slug);
+  const group =
+    INITIAL_GROUPS.find((g) => g.slug === resolvedParams.slug) ||
+    (await GroupStore.getGroupBySlug(resolvedParams.slug));
 
   if (!group) {
     notFound();
@@ -270,7 +275,7 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
                     How can I submit my own social group link?
                   </h4>
                   <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Click &quot;Submit Group&quot; in the header or <a href="https://forms.gle/oZzitWMZ8xtB9rmx5" target="_blank" rel="noopener noreferrer" className="text-emerald-600 dark:text-emerald-400 font-bold underline">open the official submission form here</a> to submit your WhatsApp, Telegram, or Arattai link for free indexing.
+                    Click &quot;Submit Group&quot; in the header or <Link href="/submit-group" className="text-emerald-600 dark:text-emerald-400 font-bold underline">open the direct submission form here</Link> to submit your WhatsApp, Telegram, or Arattai link for free indexing.
                   </p>
                 </div>
               </div>

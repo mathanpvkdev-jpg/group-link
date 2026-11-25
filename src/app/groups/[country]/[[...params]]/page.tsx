@@ -275,14 +275,12 @@ export default async function DynamicGeoGroupPage({ params }: PageProps) {
                 <p className="text-xs text-slate-500 max-w-md mx-auto">
                   Be the first to submit a group link for this location or check national listings.
                 </p>
-                <a
-                  href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/submit-group"
                   className="inline-block px-4 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-sm"
                 >
                   Submit a Group
-                </a>
+                </Link>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

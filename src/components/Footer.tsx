@@ -107,9 +107,9 @@ export const Footer: React.FC = () => {
             <ul className="space-y-1.5 text-slate-400">
               <li><Link href="/groups-2026" className="text-emerald-400 font-bold hover:underline transition-colors">🔥 7,000+ Groups (2026)</Link></li>
               <li><Link href="/" className="hover:text-emerald-400 transition-colors">Home Directory</Link></li>
-              <li><a href="https://forms.gle/oZzitWMZ8xtB9rmx5" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">➕ Post Group Free</a></li>
+              <li><Link href="/submit-group" className="hover:text-emerald-400 transition-colors">➕ Post Group Free</Link></li>
               <li><Link href="/local-biz" className="hover:text-blue-400 font-semibold transition-colors">🏪 Local Business Directory</Link></li>
-              <li><a href="https://forms.gle/FVQVofUVejQ2ebiA7" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 font-bold transition-colors">📝 Register Business (Free ₹0)</a></li>
+              <li><Link href="/local-biz/add-business" className="hover:text-blue-400 font-bold transition-colors">📝 Register Business (Free ₹0)</Link></li>
               <li><Link href="/paid-promotion" className="hover:text-amber-400 font-semibold transition-colors">⚡ Promote your business (2 Banners)</Link></li>
               <li><Link href="/blog" className="hover:text-emerald-400 transition-colors">📖 Blogs &amp; Guides</Link></li>
               <li><Link href="/dashboard" className="hover:text-emerald-400 transition-colors">My Dashboard</Link></li>

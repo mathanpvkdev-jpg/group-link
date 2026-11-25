@@ -9,6 +9,8 @@ import { INITIAL_GROUPS, CATEGORIES } from '@/lib/data';
 import { Group, Platform } from '@/lib/types';
 import { JustdialHeroStrip } from '@/components/common/JustdialHeroStrip';
 import { TypewriterText } from '@/components/common/TypewriterText';
+import { GroupStore } from '@/lib/groups/store';
+import { ENABLE_GOOGLE_FORMS } from '@/lib/forms-config';
 
 export default function GroupsPage() {
   return (
@@ -29,6 +31,15 @@ function GroupsPageContent() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'popular' | 'latest' | 'members'>('popular');
 
+  const [groups, setGroups] = useState<Group[]>(() => GroupStore.getGroupsSync());
+
+  // Fetch live groups from Supabase + localStorage on mount
+  useEffect(() => {
+    GroupStore.getGroups().then((all) => {
+      if (all && all.length > 0) setGroups(all);
+    });
+  }, []);
+
   // Sync state if platform query parameter in URL changes
   useEffect(() => {
     if (platformParam) {
@@ -38,12 +49,12 @@ function GroupsPageContent() {
     }
   }, [platformParam]);
 
-  // Submission Form State
+  // Submission Form State (Zero Login -> Direct Auto-Publish)
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    platform: 'arattai' as Platform,
+    platform: 'whatsapp' as Platform,
     category: 'Technology',
     inviteUrl: '',
     description: '',
@@ -51,7 +62,7 @@ function GroupsPageContent() {
 
   // Filter groups
   const filteredGroups = useMemo(() => {
-    return INITIAL_GROUPS.filter((g) => {
+    return groups.filter((g) => {
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase().trim();
         const tokens = q.split(/\s+/).filter(t => t.length > 0);
@@ -67,23 +78,35 @@ function GroupsPageContent() {
       if (sortBy === 'latest') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       return (b.viewsCount || 0) - (a.viewsCount || 0);
     });
-  }, [searchQuery, selectedPlatform, selectedCategory, sortBy]);
+  }, [groups, searchQuery, selectedPlatform, selectedCategory, sortBy]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
+    if (!formData.name.trim() || !formData.inviteUrl.trim()) return;
+
+    try {
+      setSubmitting(true);
+      const created = await GroupStore.createGroup({
+        name: formData.name.trim(),
+        platform: formData.platform,
+        category: formData.category,
+        inviteUrl: formData.inviteUrl.trim(),
+        description: formData.description.trim() || `${formData.name} community group.`,
+      });
+
+      setGroups((prev) => [created, ...prev.filter((g) => g.slug !== created.slug)]);
       setSubmitSuccess(true);
       setFormData({
         name: '',
-        platform: 'arattai',
+        platform: 'whatsapp',
         category: 'Technology',
         inviteUrl: '',
         description: '',
       });
-      setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 800);
+      setTimeout(() => setSubmitSuccess(false), 6000);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -180,15 +203,13 @@ function GroupsPageContent() {
               {/* Submit Link Callout Badge */}
               <div className="flex flex-wrap items-center justify-center gap-space-md text-xs text-on-surface-variant">
                 <span>Are you a group admin?</span>
-                <a
+                <Link
                   className="inline-flex items-center gap-space-xs text-primary font-bold hover:underline"
-                  href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/submit-group"
                 >
                   <span className="material-symbols-outlined text-[16px]">add_circle</span>
-                  <span>Submit your group link for free</span>
-                </a>
+                  <span>Add your group link directly (No Login • Free)</span>
+                </Link>
               </div>
             </div>
           </section>
@@ -207,7 +228,7 @@ function GroupsPageContent() {
                       : 'bg-surface-container hover:bg-surface-container-high text-on-surface'
                   }`}
                 >
-                  All Platforms ({INITIAL_GROUPS.length})
+                  All Platforms ({groups.length})
                 </button>
 
                 {/* Arattai (Zoho) ALWAYS FIRST PRIORITY */}
@@ -440,30 +461,30 @@ function GroupsPageContent() {
                   Grow Your Audience
                 </span>
                 <h2 className="font-headline-lg text-2xl sm:text-3xl font-bold text-on-surface mt-space-xs mb-space-sm">
-                  Submit Your Group Link
+                  Add Your Group Link Directly
                 </h2>
                 <p className="font-body-md text-on-surface-variant text-xs sm:text-sm">
-                  Are you running an Arattai, WhatsApp, or Telegram community? Submit your invite link via our official form to reach thousands of active members instantly.
+                  Are you running an Arattai, WhatsApp, or Telegram community? Add your invite link directly below — no login needed, goes live immediately!
                 </p>
 
-                {/* Primary Official Google Form Button */}
-                <div className="pt-2">
-                  <a
-                    href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-sm shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                  >
-                    <span className="material-symbols-outlined text-[20px]">open_in_new</span>
-                    <span>Click Here to Submit Group (Google Form)</span>
-                  </a>
-                </div>
+                {ENABLE_GOOGLE_FORMS && (
+                  <div className="pt-2">
+                    <a
+                      href="https://forms.gle/oZzitWMZ8xtB9rmx5"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white font-black text-sm shadow-lg"
+                    >
+                      <span>Click Here to Submit Group (Google Form)</span>
+                    </a>
+                  </div>
+                )}
               </div>
 
               {submitSuccess && (
                 <div className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold flex items-center gap-2">
                   <span className="material-symbols-outlined text-[20px]">check_circle</span>
-                  <span>Group link submitted successfully! It has been queued for verification.</span>
+                  <span>Group link added successfully! Your group is now live in the directory above!</span>
                 </div>
               )}
 
@@ -556,7 +577,7 @@ function GroupsPageContent() {
                     disabled={submitting}
                   >
                     <span className="material-symbols-outlined text-[18px]">publish</span>
-                    <span>{submitting ? 'Submitting...' : 'Submit Group for Approval'}</span>
+                    <span>{submitting ? 'Publishing...' : 'Publish Group Link Directly (Free • No Login)'}</span>
                   </button>
                 </div>
               </form>

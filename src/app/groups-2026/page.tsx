@@ -177,14 +177,12 @@ export default function Groups2026SEOPage() {
                 <span>Browse All 7,000+ Groups</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <a
-                href="https://forms.gle/oZzitWMZ8xtB9rmx5"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/submit-group"
                 className="px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 backdrop-blur-md transition-all cursor-pointer inline-flex items-center"
               >
                 <span>+ Submit Your Group Free</span>
-              </a>
+              </Link>
             </div>
           </div>
         </section>
