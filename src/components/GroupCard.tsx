@@ -74,7 +74,7 @@ const PLATFORM_STYLES: Record<string, { gradient: string; label: string; dot: st
 
 export const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
   const [reportModalOpen, setReportModalOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [toastText, setToastText] = useState<string | null>(null);
 
   const pStyle = PLATFORM_STYLES[group.platform] ?? {
     gradient: 'from-slate-600 to-slate-700',
@@ -82,12 +82,30 @@ export const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
     dot: 'bg-slate-400',
   };
 
+  const checkedLabel = (() => {
+    if (!group.lastChecked) return 'Verified Today';
+    const d = new Date(group.lastChecked);
+    if (Number.isNaN(d.getTime())) return group.lastChecked;
+    return d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' });
+  })();
+
+  const showToast = (msg: string) => {
+    setToastText(msg);
+    setTimeout(() => setToastText(null), 2000);
+  };
+
   const handleShare = () => {
     if (typeof window !== 'undefined') {
       const url = `${window.location.origin}/group/${group.slug}`;
       navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      showToast('✓ Page link copied!');
+    }
+  };
+
+  const handleCopyInvite = () => {
+    if (typeof window !== 'undefined' && group.inviteUrl) {
+      navigator.clipboard.writeText(group.inviteUrl);
+      showToast('✓ Invite URL copied!');
     }
   };
 
@@ -138,28 +156,78 @@ export const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
             </h3>
           </Link>
 
-          {/* Members · Active */}
-          <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-            <span className="flex items-center gap-1">
-              <Users className="w-3.5 h-3.5 text-slate-400" />
-              <strong>{group.memberCount.toLocaleString()}</strong> Members
+          {/* Description excerpt */}
+          {group.description && (
+            <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+              {group.description}
+            </p>
+          )}
+
+          {/* Category, Language & Freshness Badges */}
+          <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold">
+            <span className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+              {group.category}
             </span>
-            <span>·</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Active
+            <span className="px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/40">
+              🌐 {group.language || 'English'}
+            </span>
+            <span className="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 flex items-center gap-1">
+              <Clock className="w-2.5 h-2.5" />
+              Checked {checkedLabel}
             </span>
           </div>
 
-          {/* User Requested Action Button: [ 👉 Join WhatsApp Group ] */}
-          <div className="pt-2">
+          {/* Members · Active + Quick Utility Buttons */}
+          <div className="flex items-center justify-between gap-2 text-xs text-slate-500 font-medium pt-1">
+            <div className="flex items-center gap-2">
+              <span className="flex items-center gap-1">
+                <Users className="w-3.5 h-3.5 text-slate-400" />
+                <strong>{group.memberCount.toLocaleString()}</strong> Members
+              </span>
+              <span>·</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Active
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={handleCopyInvite}
+                title="Copy Direct Invite Link"
+                className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer"
+              >
+                <Copy className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={handleShare}
+                title="Share Group Page"
+                className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setReportModalOpen(true)}
+                title="Report Broken or Spam Link"
+                className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-rose-100 dark:hover:bg-rose-950/60 text-slate-500 hover:text-rose-600 transition-colors cursor-pointer"
+              >
+                <Flag className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Primary Actions: [ View & Join Page ] + [ Direct Invite ] */}
+          <div className="pt-2 flex items-center gap-2">
             <Link
               href={`/group/${group.slug}`}
-              className={`w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold text-white text-center flex items-center justify-center gap-2 shadow-sm transition-all ${
+              className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-extrabold text-center flex items-center justify-center gap-1.5 shadow-sm transition-all ${
                 group.platform === 'whatsapp'
-                  ? 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-600/20'
+                  ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20'
                   : group.platform === 'telegram'
-                  ? 'bg-sky-600 hover:bg-sky-500 shadow-sky-600/20'
+                  ? 'bg-sky-600 hover:bg-sky-500 text-white shadow-sky-600/20'
                   : group.platform === 'arattai'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black'
                   : group.platform === 'instagram'
@@ -167,16 +235,25 @@ export const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
                   : 'bg-slate-900 hover:bg-slate-800 text-white'
               }`}
             >
-              <span>👉 Join {pStyle.label}</span>
-              <ExternalLink className="w-3.5 h-3.5" />
+              <span>View &amp; Join</span>
             </Link>
+            <a
+              href={group.inviteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`Open ${pStyle.label} invite directly`}
+              className="py-2.5 px-3 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 flex items-center gap-1 transition-colors shrink-0"
+            >
+              <span>Direct</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
 
         {/* Copied toast */}
-        {copied && (
+        {toastText && (
           <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-slate-900 text-emerald-400 text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-xl border border-slate-700 animate-fade-in whitespace-nowrap z-20">
-            ✓ Link copied!
+            {toastText}
           </div>
         )}
       </div>

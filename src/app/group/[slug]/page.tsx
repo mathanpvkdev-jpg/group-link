@@ -42,15 +42,20 @@ export async function generateMetadata({ params }: GroupPageProps): Promise<Meta
 
   if (!group) return { title: 'Group Not Found | GroupHub' };
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grouphub-eta.vercel.app';
   const title = `${group.name} – Join Active ${group.platform.toUpperCase()} Group (${group.city || group.country})`;
   const description = `${group.description.slice(0, 155)}...`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: `${siteUrl}/group/${resolvedParams.slug}`,
+    },
     openGraph: {
       title,
       description,
+      url: `${siteUrl}/group/${resolvedParams.slug}`,
       type: 'article',
     },
   };
@@ -70,6 +75,30 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
   const relatedGroups = INITIAL_GROUPS.filter(
     (g) => g.id !== group.id && (g.category === group.category || g.city === group.city)
   ).slice(0, 3);
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grouphub-eta.vercel.app';
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Groups', item: `${siteUrl}/groups` },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: group.country,
+        item: `${siteUrl}/groups/${group.countryCode.toLowerCase()}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: group.name,
+        item: `${siteUrl}/group/${resolvedParams.slug}`,
+      },
+    ],
+  };
 
   // Dynamic FAQ Schema
   const faqSchema = {
@@ -97,6 +126,10 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -289,6 +322,35 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
 
             {/* Permanent Contextual Safety Advisory */}
             <ContextualSafetyBanner variant="group" />
+
+            {/* Cross-Vertical Discovery: Related Local Businesses */}
+            <div className="rounded-3xl p-5 sm:p-6 bg-gradient-to-r from-blue-600/10 via-indigo-600/10 to-emerald-600/10 border border-blue-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                  Nammabus Local Business Directory
+                </span>
+                <h3 className="text-base font-black text-slate-900 dark:text-white">
+                  Explore Verified Local Businesses in {group.city || group.country}
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400">
+                  Find direct-contact technicians, suppliers, agencies &amp; shops or list your business free with no login.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <Link
+                  href={`/local-biz/businesses${group.city ? `?q=${encodeURIComponent(group.city)}` : ''}`}
+                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-sm transition-colors"
+                >
+                  Browse Businesses →
+                </Link>
+                <Link
+                  href="/local-biz/add-business"
+                  className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-slate-200 hover:border-blue-500 transition-colors"
+                >
+                  + Add Business
+                </Link>
+              </div>
+            </div>
           </div>
 
           {/* Sticky Sidebar AdSense Skyscraper (4 Cols) */}

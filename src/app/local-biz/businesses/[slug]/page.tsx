@@ -666,14 +666,26 @@ export default function BusinessProfilePage() {
                   </div>
                 )}
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
-                  <MapPin className="w-4 h-4 text-slate-500" />
-                  <div>
-                    <span className="text-slate-400 block">Physical Address</span>
-                    <span className="font-semibold text-slate-800 dark:text-slate-200">
-                      {business.address}, {business.area ? `${business.area}, ` : ''}{business.city?.name}, {business.state} - {business.pincode}
-                    </span>
+                <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
+                  <div className="flex items-center gap-3">
+                    <MapPin className="w-4 h-4 text-slate-500 shrink-0" />
+                    <div>
+                      <span className="text-slate-400 block">Physical Address</span>
+                      <span className="font-semibold text-slate-800 dark:text-slate-200">
+                        {business.address}, {business.area ? `${business.area}, ` : ''}{business.city?.name || business.city_name}, {business.state} - {business.pincode}
+                      </span>
+                    </div>
                   </div>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      `${business.name} ${business.address || ''} ${business.area || ''} ${business.city?.name || business.city_name || ''} ${business.pincode || ''}`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-lg bg-blue-600/10 hover:bg-blue-600/20 text-blue-600 dark:text-blue-400 font-bold text-[11px] shrink-0 transition-colors"
+                  >
+                    Directions ↗
+                  </a>
                 </div>
               </div>
             </div>
@@ -695,6 +707,35 @@ export default function BusinessProfilePage() {
             </div>
           </div>
         )}
+
+        {/* Cross-Vertical Discovery: Connect with Local & B2B Groups */}
+        <div className="mt-8 rounded-3xl p-5 sm:p-6 bg-gradient-to-r from-emerald-600/10 via-teal-600/10 to-amber-500/10 border border-emerald-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+              JoinGroupLinks Community Hub
+            </span>
+            <h3 className="text-base font-black text-slate-900 dark:text-white">
+              Join Active B2B, Jobs &amp; Community Groups in {business.city?.name || business.city_name || 'India'}
+            </h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              Discover verified WhatsApp, Arattai &amp; Telegram trade groups or add your own community link directly for free.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <Link
+              href={`/groups${business.city?.name || business.city_name ? `?q=${encodeURIComponent(business.city?.name || business.city_name || '')}` : ''}`}
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm transition-colors"
+            >
+              Explore Groups →
+            </Link>
+            <Link
+              href="/submit-group"
+              className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-slate-200 hover:border-emerald-500 transition-colors"
+            >
+              + Add Group
+            </Link>
+          </div>
+        </div>
       </div>
 
       <EnquiryModal

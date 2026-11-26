@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   ArrowDown,
   Sparkles,
@@ -64,17 +64,6 @@ export const TopScrollDownBanner: React.FC<ScrollDownJoinHelperProps> = ({ group
 
 export const BottomJoinSection: React.FC<ScrollDownJoinHelperProps> = ({ group }) => {
   const [copied, setCopied] = useState(false);
-  const [countdown, setCountdown] = useState(3);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    } else {
-      setReady(true);
-    }
-  }, [countdown]);
 
   const handleCopy = () => {
     if (typeof window !== 'undefined' && group.inviteUrl) {

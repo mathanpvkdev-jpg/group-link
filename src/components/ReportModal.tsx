@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { X, AlertTriangle, CheckCircle } from 'lucide-react';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase/client';
 
 interface ReportModalProps {
   groupId: string;
@@ -9,13 +10,35 @@ interface ReportModalProps {
   onClose: () => void;
 }
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export const ReportModal: React.FC<ReportModalProps> = ({ groupId, groupName, onClose }) => {
   const [reason, setReason] = useState<'dead_link' | 'spam' | 'adult_content' | 'misleading' | 'other'>('dead_link');
   const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('group_reports').insert([
+          {
+            group_id: UUID_REGEX.test(groupId) ? groupId : null,
+            group_name: groupName.slice(0, 180),
+            reason,
+            message: message.trim().slice(0, 500) || null,
+            status: 'pending',
+          },
+        ]);
+      } catch (err) {
+        console.warn('Report fallback notice:', err);
+      }
+    }
+
+    setSubmitting(false);
     setSubmitted(true);
     setTimeout(() => {
       onClose();
@@ -95,9 +118,10 @@ export const ReportModal: React.FC<ReportModalProps> = ({ groupId, groupName, on
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 shadow-md shadow-rose-500/20"
+                disabled={submitting}
+                className="px-5 py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 disabled:opacity-60 shadow-md shadow-rose-500/20 cursor-pointer"
               >
-                Submit Report
+                {submitting ? 'Submitting...' : 'Submit Report'}
               </button>
             </div>
           </form>

@@ -9,6 +9,7 @@ import { LocalBizStore } from '@/lib/local-biz/store';
 import { Business, Category, City, Product } from '@/types/local-biz';
 import { SEED_CATEGORIES, SEED_CITIES, SEED_PROFESSIONALS } from '@/lib/local-biz/seed-data';
 import { GrowBusinessSection } from '@/components/local-biz/GrowBusinessSection';
+import { MultiQuoteBanner } from '@/components/local-biz/MultiQuoteBanner';
 import { JustdialHeroStrip } from '@/components/common/JustdialHeroStrip';
 import { TypewriterText } from '@/components/common/TypewriterText';
 
@@ -537,6 +538,13 @@ export default function LocalBizHomePage() {
                 </div>
               ))}
             </div>
+          </section>
+
+          {/* ========================================================
+              3.5 SULEKHA / JUSTDIAL MULTI-QUOTE REQUIREMENT MATCHER
+             ======================================================== */}
+          <section className="w-full max-w-7xl mx-auto px-gutter py-space-lg">
+            <MultiQuoteBanner />
           </section>
 
           {/* ========================================================

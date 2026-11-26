@@ -18,6 +18,7 @@ import {
 import { LocalBizHeader } from '@/components/local-biz/LocalBizHeader';
 import { LocalBizFooter } from '@/components/local-biz/LocalBizFooter';
 import { BusinessCard } from '@/components/local-biz/BusinessCard';
+import { MultiQuoteBanner } from '@/components/local-biz/MultiQuoteBanner';
 import { LocationSearchFilter } from '@/components/common/LocationSearchFilter';
 import { LocalBizStore } from '@/lib/local-biz/store';
 import { Business, Category, City } from '@/types/local-biz';
@@ -42,6 +43,8 @@ function BusinessesContent() {
   const [selectedDistrict, setSelectedDistrict] = useState(initialDistrict);
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [whatsappOnly, setWhatsappOnly] = useState(false);
+  const [gstOnly, setGstOnly] = useState(false);
   const [minRating, setMinRating] = useState<number>(0);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'featured' | 'rating' | 'name'>('featured');
@@ -101,6 +104,12 @@ function BusinessesContent() {
 
   const filteredAndSorted = useMemo(() => {
     let result = [...businesses];
+    if (whatsappOnly) {
+      result = result.filter((b) => Boolean(b.whatsapp && b.whatsapp.trim()));
+    }
+    if (gstOnly) {
+      result = result.filter((b) => Boolean(b.gst_number && b.gst_number.trim()));
+    }
     if (minRating > 0) {
       result = result.filter((b) => (b.rating || 0) >= minRating);
     }
@@ -113,7 +122,7 @@ function BusinessesContent() {
       result.sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0));
     }
     return result;
-  }, [businesses, minRating, sortBy]);
+  }, [businesses, whatsappOnly, gstOnly, minRating, sortBy]);
 
   // Compute location display phrase for heading & counts:
   // e.g. "in Coimbatore, Tamil Nadu", "in Tamil Nadu", or "across India"
@@ -140,6 +149,8 @@ function BusinessesContent() {
     setSelectedDistrict('');
     setSelectedCategory('');
     setVerifiedOnly(false);
+    setWhatsappOnly(false);
+    setGstOnly(false);
     setMinRating(0);
     setSortBy('featured');
     router.push('/local-biz/businesses');
@@ -417,6 +428,65 @@ function BusinessesContent() {
               </div>
             </div>
 
+            {/* Justdial-Style Quick Filter Chips + Instant Add Business CTA */}
+            <div className="flex flex-wrap items-center justify-between gap-2 bg-white dark:bg-slate-900 rounded-2xl p-3 border border-slate-200 dark:border-slate-800">
+              <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+                <button
+                  type="button"
+                  onClick={() => setVerifiedOnly(!verifiedOnly)}
+                  className={`px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1 ${
+                    verifiedOnly
+                      ? 'bg-emerald-600 text-white shadow-sm'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Verified Only</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMinRating(minRating === 4.5 ? 0 : 4.5)}
+                  className={`px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1 ${
+                    minRating === 4.5
+                      ? 'bg-amber-500 text-slate-950 shadow-sm font-black'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  <Star className="w-3.5 h-3.5" />
+                  <span>4.5+ Top Rated</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setWhatsappOnly(!whatsappOnly)}
+                  className={`px-3 py-1.5 rounded-full transition-all cursor-pointer ${
+                    whatsappOnly
+                      ? 'bg-emerald-500 text-white shadow-sm'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  💬 WhatsApp Direct
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setGstOnly(!gstOnly)}
+                  className={`px-3 py-1.5 rounded-full transition-all cursor-pointer ${
+                    gstOnly
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  ✓ GST Verified
+                </button>
+              </div>
+
+              <Link
+                href="/local-biz/add-business"
+                className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-extrabold shadow-sm transition-colors shrink-0"
+              >
+                + Add Business Free (60s)
+              </Link>
+            </div>
+
             {/* Results Grid / List */}
             {loading ? (
               <div className="py-20 text-center text-slate-400 text-sm">
@@ -431,14 +501,22 @@ function BusinessesContent() {
                 <p className="text-xs text-slate-500 max-w-sm mx-auto">
                   We couldn&apos;t find any listings matching your search criteria. Try choosing &quot;All districts&quot;, switching state to &quot;All India&quot;, or clearing all filters.
                 </p>
-                <button
-                  type="button"
-                  onClick={handleResetFilters}
-                  className="mt-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all cursor-pointer inline-flex items-center gap-1.5"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Clear filters</span>
-                </button>
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                  <button
+                    type="button"
+                    onClick={handleResetFilters}
+                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all cursor-pointer inline-flex items-center gap-1.5"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Clear filters</span>
+                  </button>
+                  <Link
+                    href="/local-biz/add-business"
+                    className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition-all"
+                  >
+                    + Add Your Business Free
+                  </Link>
+                </div>
               </div>
             ) : (
               <div
@@ -453,6 +531,41 @@ function BusinessesContent() {
                 ))}
               </div>
             )}
+
+            {/* Sulekha/Justdial Style Multi-Quote Requirement Matcher */}
+            <MultiQuoteBanner
+              defaultCategory={selectedCategory}
+              defaultCity={selectedDistrict || selectedCity}
+            />
+
+            {/* Cross-Vertical Discovery Banner: Business Directory -> Community Groups */}
+            <div className="rounded-3xl p-5 sm:p-6 bg-gradient-to-r from-emerald-600/10 via-teal-600/10 to-amber-500/10 border border-emerald-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                  JoinGroupLinks Community Hub
+                </span>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                  Connect with City B2B, Trade &amp; Networking Groups
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400">
+                  Join verified WhatsApp, Arattai &amp; Telegram business networking groups or submit your group link free with zero login.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+                <Link
+                  href="/groups"
+                  className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm transition-colors"
+                >
+                  Browse Active Groups →
+                </Link>
+                <Link
+                  href="/submit-group"
+                  className="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-slate-200 hover:border-emerald-500 transition-colors"
+                >
+                  + Add Group Free
+                </Link>
+              </div>
+            </div>
           </main>
         </div>
       </div>

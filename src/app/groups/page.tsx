@@ -11,6 +11,9 @@ import { JustdialHeroStrip } from '@/components/common/JustdialHeroStrip';
 import { TypewriterText } from '@/components/common/TypewriterText';
 import { GroupStore } from '@/lib/groups/store';
 import { ENABLE_GOOGLE_FORMS } from '@/lib/forms-config';
+import { GroupCard } from '@/components/GroupCard';
+
+const GROUP_LANGUAGES = ['All', 'Tamil', 'English', 'Hindi', 'Telugu', 'Malayalam', 'Kannada'];
 
 export default function GroupsPage() {
   return (
@@ -29,6 +32,8 @@ function GroupsPageContent() {
     return platformParam ? platformParam.toLowerCase() : 'all';
   });
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('All');
+  const [verifiedOnly, setVerifiedOnly] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<'popular' | 'latest' | 'members'>('popular');
 
   const [groups, setGroups] = useState<Group[]>(() => GroupStore.getGroupsSync());
@@ -56,6 +61,8 @@ function GroupsPageContent() {
     name: '',
     platform: 'whatsapp' as Platform,
     category: 'Technology',
+    language: 'English',
+    city: '',
     inviteUrl: '',
     description: '',
   });
@@ -66,19 +73,21 @@ function GroupsPageContent() {
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase().trim();
         const tokens = q.split(/\s+/).filter(t => t.length > 0);
-        const searchTarget = `${g.name} ${g.description} ${g.city || ''} ${g.area || ''} ${g.state || ''} ${g.category}`.toLowerCase();
+        const searchTarget = `${g.name} ${g.description} ${g.city || ''} ${g.area || ''} ${g.state || ''} ${g.category} ${g.language || ''}`.toLowerCase();
         const matchesTokens = tokens.every(tok => searchTarget.includes(tok)) || tokens.some(tok => searchTarget.includes(tok));
         if (!matchesTokens) return false;
       }
       if (selectedPlatform !== 'all' && g.platform !== selectedPlatform) return false;
       if (selectedCategory !== 'all' && g.category.toLowerCase() !== selectedCategory.toLowerCase()) return false;
+      if (selectedLanguage !== 'All' && (g.language || 'English').toLowerCase() !== selectedLanguage.toLowerCase()) return false;
+      if (verifiedOnly && !g.isVerified) return false;
       return true;
     }).sort((a, b) => {
       if (sortBy === 'members') return b.memberCount - a.memberCount;
       if (sortBy === 'latest') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       return (b.viewsCount || 0) - (a.viewsCount || 0);
     });
-  }, [groups, searchQuery, selectedPlatform, selectedCategory, sortBy]);
+  }, [groups, searchQuery, selectedPlatform, selectedCategory, selectedLanguage, verifiedOnly, sortBy]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +99,8 @@ function GroupsPageContent() {
         name: formData.name.trim(),
         platform: formData.platform,
         category: formData.category,
+        language: formData.language,
+        city: formData.city.trim() || undefined,
         inviteUrl: formData.inviteUrl.trim(),
         description: formData.description.trim() || `${formData.name} community group.`,
       });
@@ -100,6 +111,8 @@ function GroupsPageContent() {
         name: '',
         platform: 'whatsapp',
         category: 'Technology',
+        language: 'English',
+        city: '',
         inviteUrl: '',
         description: '',
       });
@@ -334,11 +347,73 @@ function GroupsPageContent() {
           {/* ========================================================
               3. POPULAR & RECENTLY ADDED GROUPS GRID
              ======================================================== */}
-          <section className="w-full py-space-xl px-gutter max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-md">
+          <section className="w-full py-space-xl px-gutter max-w-7xl mx-auto space-y-6">
+            {/* Competitor-grade Quick Intent & Language Discovery Bar */}
+            <div className="bg-surface-container-low rounded-2xl p-4 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-on-surface-variant mr-1">
+                  Language:
+                </span>
+                {GROUP_LANGUAGES.map((lang) => (
+                  <button
+                    key={lang}
+                    type="button"
+                    onClick={() => setSelectedLanguage(lang)}
+                    className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      selectedLanguage === lang
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'bg-white dark:bg-slate-900 text-on-surface border border-slate-200 dark:border-slate-800 hover:border-emerald-500'
+                    }`}
+                  >
+                    {lang === 'All' ? 'All Languages' : lang}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70 dark:border-slate-800/70">
+                <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+                  <span className="font-bold text-on-surface-variant mr-1">Trending Searches:</span>
+                  {[
+                    { label: 'Jobs & Hiring', q: 'jobs' },
+                    { label: 'Tamil Groups', lang: 'Tamil' },
+                    { label: 'AI & Tech', q: 'tech' },
+                    { label: 'Business & B2B', q: 'business' },
+                    { label: 'Study & UPSC', q: 'study' },
+                  ].map((chip) => (
+                    <button
+                      key={chip.label}
+                      type="button"
+                      onClick={() => {
+                        if (chip.lang) {
+                          setSelectedLanguage(chip.lang);
+                          setSearchQuery('');
+                        } else if (chip.q) {
+                          setSearchQuery(chip.q);
+                        }
+                      }}
+                      className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-primary text-on-surface font-semibold transition-colors cursor-pointer"
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
+
+                <label className="inline-flex items-center gap-2 text-xs font-bold text-on-surface cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={verifiedOnly}
+                    onChange={(e) => setVerifiedOnly(e.target.checked)}
+                    className="w-4 h-4 rounded accent-emerald-600 cursor-pointer"
+                  />
+                  <span>Verified Active Only</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
               <div>
                 <span className="text-label-sm uppercase tracking-wider text-primary font-bold text-xs">
-                  Trending Directories
+                  Trending Directories ({filteredGroups.length} Active)
                 </span>
                 <h2 className="font-headline-lg text-2xl sm:text-3xl font-bold text-on-surface mt-space-xs">
                   Popular &amp; Verified Groups
@@ -358,96 +433,71 @@ function GroupsPageContent() {
               </div>
             </div>
 
-            {/* Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
-              {filteredGroups.map((group) => {
-                const isArattai = group.platform === 'arattai';
-                const isWA = group.platform === 'whatsapp';
-                const isTG = group.platform === 'telegram';
-
-                return (
-                  <div
-                    key={group.id}
-                    className="bg-surface-container-lowest rounded-3xl p-space-lg shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group border border-slate-200 dark:border-slate-800"
+            {/* Cards Grid (Using Upgraded GroupCard with Details, Copy, Share, Report & Direct Join) */}
+            {filteredGroups.length === 0 ? (
+              <div className="rounded-3xl bg-surface-container-low border border-slate-200 dark:border-slate-800 p-10 text-center space-y-4">
+                <div className="text-4xl">🔍</div>
+                <h3 className="text-lg font-extrabold text-on-surface">No matching groups found</h3>
+                <p className="text-xs text-on-surface-variant max-w-md mx-auto">
+                  Try clearing your filters or be the first group admin to list this topic directly (takes 10 seconds, zero login).
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedPlatform('all');
+                      setSelectedCategory('all');
+                      setSelectedLanguage('All');
+                      setVerifiedOnly(false);
+                    }}
+                    className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer"
                   >
-                    <div>
-                      <div className="flex items-start justify-between mb-space-md">
-                        <div className="w-14 h-14 rounded-2xl bg-surface-container-high flex items-center justify-center font-bold text-sm overflow-hidden relative">
-                          {isArattai ? (
-                            <span className="text-amber-600 font-black">ZOHO</span>
-                          ) : isWA ? (
-                            <span className="text-emerald-600 font-black">WA</span>
-                          ) : isTG ? (
-                            <span className="text-sky-600 font-black">TG</span>
-                          ) : (
-                            <span className="text-indigo-600 font-black">COMM</span>
-                          )}
-                        </div>
-                        <div
-                          className={`flex items-center gap-space-xs px-2.5 py-1 rounded-full text-[11px] font-bold ${
-                            isArattai
-                              ? 'bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300'
-                              : isWA
-                              ? 'bg-secondary-container text-on-secondary-container'
-                              : 'bg-primary-fixed text-on-primary-fixed'
-                          }`}
-                        >
-                          <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                            {isWA ? 'chat' : isTG ? 'send' : 'groups'}
-                          </span>
-                          <span className="capitalize">{group.platform}</span>
-                        </div>
-                      </div>
+                    Reset All Filters
+                  </button>
+                  <a
+                    href="#submit-section"
+                    className="px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow-sm"
+                  >
+                    + Add Your Group Free
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+                {filteredGroups.map((group) => (
+                  <GroupCard key={group.id} group={group} />
+                ))}
+              </div>
+            )}
 
-                      <div className="flex items-center gap-space-xs mb-space-xs">
-                        <h3 className="font-headline-sm font-bold text-base text-on-surface group-hover:text-primary transition-colors">
-                          {group.name}
-                        </h3>
-                        {group.isVerified && (
-                          <span
-                            className="material-symbols-outlined text-primary text-[18px]"
-                            style={{ fontVariationSettings: "'FILL' 1" }}
-                            title="Verified Community"
-                          >
-                            verified
-                          </span>
-                        )}
-                      </div>
-
-                      <p className="font-body-sm text-on-surface-variant text-xs line-clamp-2 mb-space-md">
-                        {group.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-space-xs mb-space-lg">
-                        <span className="px-2.5 py-0.5 rounded-md bg-surface-container text-on-surface-variant text-[11px] font-medium">
-                          {group.category}
-                        </span>
-                        {group.city && (
-                          <span className="px-2.5 py-0.5 rounded-md bg-surface-container text-on-surface-variant text-[11px] font-medium">
-                            📍 {group.city}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="pt-space-md border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                      <div className="flex items-center gap-space-xs text-xs text-on-surface-variant">
-                        <span className="material-symbols-outlined text-[18px] text-outline">group</span>
-                        <span>{group.memberCount.toLocaleString()} members</span>
-                      </div>
-                      <a
-                        href={group.inviteUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-space-lg py-space-sm rounded-full bg-primary text-on-primary text-xs font-bold hover:bg-primary-container transition-all flex items-center gap-space-xs shadow-sm"
-                      >
-                        <span>Join Group</span>
-                        <span className="material-symbols-outlined text-[16px]">open_in_new</span>
-                      </a>
-                    </div>
-                  </div>
-                );
-              })}
+            {/* Cross-Vertical Discovery Banner: Groups -> Nammabus Local Business Directory */}
+            <div className="rounded-3xl p-5 sm:p-6 bg-gradient-to-r from-blue-600/10 via-indigo-600/10 to-emerald-600/10 border border-blue-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                  Nammabus Local Business &amp; B2B Hub
+                </span>
+                <h3 className="text-base sm:text-lg font-black text-on-surface">
+                  Need a Trusted Local Technician, Photographer, or B2B Supplier?
+                </h3>
+                <p className="text-xs text-on-surface-variant">
+                  Explore 40+ verified service categories across India or list your own business directly with zero broker fees.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+                <Link
+                  href="/local-biz/businesses"
+                  className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-sm transition-colors"
+                >
+                  Explore Local Businesses →
+                </Link>
+                <Link
+                  href="/local-biz/add-business"
+                  className="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-on-surface hover:border-blue-500 transition-colors"
+                >
+                  + Add Business Free
+                </Link>
+              </div>
             </div>
           </section>
 
@@ -542,6 +592,34 @@ function GroupsPageContent() {
                       type="url"
                       value={formData.inviteUrl}
                       onChange={(e) => setFormData({ ...formData, inviteUrl: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+                  <div>
+                    <label className="block text-xs font-bold text-on-surface mb-space-xs">Language</label>
+                    <select
+                      className="w-full bg-surface-container-low px-space-md py-space-sm rounded-xl text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary border border-transparent transition-all cursor-pointer"
+                      value={formData.language}
+                      onChange={(e) => setFormData({ ...formData, language: e.target.value })}
+                    >
+                      <option value="English">English</option>
+                      <option value="Tamil">Tamil</option>
+                      <option value="Hindi">Hindi</option>
+                      <option value="Telugu">Telugu</option>
+                      <option value="Malayalam">Malayalam</option>
+                      <option value="Kannada">Kannada</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-on-surface mb-space-xs">City / Area (Optional)</label>
+                    <input
+                      className="w-full bg-surface-container-low px-space-md py-space-sm rounded-xl text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary border border-transparent transition-all"
+                      placeholder="e.g., Chennai, Coimbatore, Bangalore"
+                      type="text"
+                      value={formData.city}
+                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                     />
                   </div>
                 </div>

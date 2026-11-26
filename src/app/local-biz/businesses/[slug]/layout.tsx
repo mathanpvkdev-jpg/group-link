@@ -102,8 +102,37 @@ export default async function BusinessLayout({
       }
     : null;
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Businesses', item: `${siteUrl}/local-biz/businesses` },
+      ...(business?.city_name
+        ? [
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: business.city_name,
+              item: `${siteUrl}/local-biz/businesses?city=${encodeURIComponent(business.city_name.toLowerCase())}`,
+            },
+          ]
+        : []),
+      {
+        '@type': 'ListItem',
+        position: business?.city_name ? 4 : 3,
+        name: business?.name || slug,
+        item: `${siteUrl}/local-biz/businesses/${slug}`,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {localBusinessSchema && (
         <script
           type="application/ld+json"
