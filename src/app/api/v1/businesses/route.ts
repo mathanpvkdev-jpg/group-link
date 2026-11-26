@@ -4,6 +4,13 @@ import { SEED_BUSINESSES } from '@/lib/local-biz/seed-data';
 
 export const dynamic = 'force-dynamic';
 
+function sanitizeText(val: unknown, maxLen: number): string {
+  return String(val || '')
+    .replace(/[<>]/g, '')
+    .trim()
+    .slice(0, maxLen);
+}
+
 export async function GET(request: NextRequest) {
   const requestId = request.headers.get('x-request-id') || crypto.randomUUID();
   const searchParams = request.nextUrl.searchParams;
@@ -11,7 +18,7 @@ export async function GET(request: NextRequest) {
   const state = searchParams.get('state');
   const district = searchParams.get('district');
   const category = searchParams.get('category');
-  const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 50);
+  const limit = Math.min(Math.max(parseInt(searchParams.get('limit') || '20', 10) || 20, 1), 50);
 
   let list = [...SEED_BUSINESSES];
   if (state) {
@@ -50,11 +57,18 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    if (!body.name || !body.phone || !body.state || !body.city) {
+    const cleanName = sanitizeText(body.name, 200);
+    const cleanPhone = sanitizeText(body.phone, 40);
+    const cleanState = sanitizeText(body.state, 100);
+    const cleanCity = sanitizeText(body.city, 100);
+    const cleanAddress = sanitizeText(body.address || `${cleanCity}, ${cleanState}`, 300);
+    const cleanCategoryId = sanitizeText(body.categoryId || 'home-services', 80);
+
+    if (!cleanName || cleanName.length < 2 || !cleanPhone || cleanPhone.length < 6 || !cleanState || !cleanCity) {
       return NextResponse.json(
         createErrorResponse(
           'VALIDATION_ERROR',
-          'Missing required fields: name, phone, state, and city are mandatory.',
+          'Missing or invalid required fields: name, phone, state, and city are mandatory.',
           requestId
         ),
         { status: 400 }
@@ -63,13 +77,13 @@ export async function POST(request: NextRequest) {
 
     const newBusiness = {
       id: `biz-${Date.now()}`,
-      name: body.name,
-      slug: body.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      phone: body.phone,
-      state: body.state,
-      city: body.city,
-      address: body.address || `${body.city}, ${body.state}`,
-      categoryId: body.categoryId || 'home-services',
+      name: cleanName,
+      slug: cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      phone: cleanPhone,
+      state: cleanState,
+      city: cleanCity,
+      address: cleanAddress,
+      categoryId: cleanCategoryId,
       status: 'approved',
       isVerified: true,
       rating: 5.0,

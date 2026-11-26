@@ -6,19 +6,28 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { amount, planId, planName, customerEmail, customerPhone, promoCode } = body;
 
-    if (!amount || amount <= 0) {
+    const numericAmount = Number(amount);
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0 || numericAmount > 500000) {
       return NextResponse.json(
         { error: 'Invalid payment amount specified.' },
         { status: 400 }
       );
     }
 
-    const keyId = process.env.RAZORPAY_KEY_ID || 'rzp_test_local_sandbox';
-    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+    const keyId = process.env.RAZORPAY_KEY_ID || '';
+    const keySecret = process.env.RAZORPAY_KEY_SECRET || '';
 
     // Convert amount to paise (1 INR = 100 paise)
-    const amountInPaise = Math.round(Number(amount) * 100);
+    const amountInPaise = Math.round(numericAmount * 100);
     const receipt = `rcpt_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+
+    // Fail closed in production if live payment keys are not configured
+    if (process.env.NODE_ENV === 'production' && (!keyId || !keySecret || keyId.includes('sandbox'))) {
+      return NextResponse.json(
+        { error: 'Online payments are currently disabled during the free ₹0 launch.' },
+        { status: 503 }
+      );
+    }
 
     // If real Razorpay keys are configured in environment
     if (keyId && keySecret && !keyId.includes('sandbox')) {

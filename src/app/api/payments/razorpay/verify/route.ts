@@ -1,6 +1,17 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 
+function timingSafeHexEquals(a: string, b: string): boolean {
+  try {
+    const bufA = Buffer.from(a, 'hex');
+    const bufB = Buffer.from(b, 'hex');
+    if (bufA.length === 0 || bufA.length !== bufB.length) return false;
+    return crypto.timingSafeEqual(bufA, bufB);
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -9,50 +20,51 @@ export async function POST(request: Request) {
       razorpay_payment_id,
       razorpay_signature,
       planId,
-      customerEmail,
       amount,
     } = body;
 
-    if (!razorpay_order_id || !razorpay_payment_id) {
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
       return NextResponse.json(
-        { verified: false, error: 'Missing payment transaction tokens.' },
+        { verified: false, error: 'Missing required payment verification tokens.' },
         { status: 400 }
       );
     }
 
     const keySecret = process.env.RAZORPAY_KEY_SECRET;
-
-    // Real signature verification if keySecret is available
-    if (keySecret) {
-      const generatedSignature = crypto
-        .createHmac('sha256', keySecret)
-        .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-        .digest('hex');
-
-      if (generatedSignature !== razorpay_signature) {
-        return NextResponse.json(
-          { verified: false, error: 'Cryptographic signature mismatch. Payment verification failed.' },
-          { status: 400 }
-        );
-      }
+    if (!keySecret) {
+      // Fail closed: never allow unverified payment confirmation without configured secret
+      return NextResponse.json(
+        { verified: false, error: 'Payment gateway verification is not configured on this server.' },
+        { status: 503 }
+      );
     }
 
-    // Payment is verified
+    const generatedSignature = crypto
+      .createHmac('sha256', keySecret)
+      .update(`${String(razorpay_order_id)}|${String(razorpay_payment_id)}`)
+      .digest('hex');
+
+    if (!timingSafeHexEquals(generatedSignature, String(razorpay_signature))) {
+      return NextResponse.json(
+        { verified: false, error: 'Cryptographic signature mismatch. Payment verification failed.' },
+        { status: 403 }
+      );
+    }
+
     return NextResponse.json({
       verified: true,
-      orderId: razorpay_order_id,
-      paymentId: razorpay_payment_id,
-      planId: planId || 'basic',
-      amount: amount || 99,
+      orderId: String(razorpay_order_id),
+      paymentId: String(razorpay_payment_id),
+      planId: String(planId || 'basic'),
+      amount: Number(amount) || 99,
       status: 'captured',
       verifiedAt: new Date().toISOString(),
-      message: 'Payment signature verified successfully. Premium listing privileges unlocked.',
+      message: 'Payment signature verified successfully.',
     });
-  } catch (error: any) {
-    console.error('Error verifying Razorpay payment:', error);
+  } catch {
     return NextResponse.json(
-      { verified: false, error: error.message || 'Payment signature verification encountered an internal error.' },
-      { status: 500 }
+      { verified: false, error: 'Payment signature verification failed.' },
+      { status: 400 }
     );
   }
 }

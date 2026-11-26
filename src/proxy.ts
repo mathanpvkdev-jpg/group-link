@@ -1,19 +1,20 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { edgeRateLimiter } from '@/core/security/rate-limiter';
+import { edgeRateLimiter, writeRateLimiter } from '@/core/security/rate-limiter';
 import { ADMIN_PORTAL_LOCKED } from '@/lib/forms-config';
 
 /**
- * Next.js 16 Request Proxy (Convention replacing legacy Middleware)
- * Purpose: Lightweight request correlation, security headers, and edge rate limiting.
- * Deep authorization is deliberately enforced at Server Actions, Route Handlers & PostgreSQL RLS policies.
+ * Next.js 16 Request Proxy (Edge Security & Access Control)
  */
 export function proxy(request: NextRequest) {
   const requestId = crypto.randomUUID();
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || '127.0.0.1';
+  const ip =
+    request.headers.get('x-real-ip') ||
+    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+    '127.0.0.1';
   const pathname = request.nextUrl.pathname;
 
-  // Lock Admin & Moderation Portals (Auto-Admit Mode active until manual approval is enabled)
+  // 1. Lock Admin & Moderation Portals (Auto-Admit Mode active until manual approval is enabled)
   if (
     ADMIN_PORTAL_LOCKED &&
     (pathname === '/admin' ||
@@ -26,9 +27,12 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  // Apply edge rate limiting to API routes
-  if (request.nextUrl.pathname.startsWith('/api/')) {
-    const rateCheck = edgeRateLimiter.check(ip);
+  // 2. Apply tiered sliding-window rate limiting to API routes
+  if (pathname.startsWith('/api/')) {
+    const isWriteMethod = request.method !== 'GET' && request.method !== 'HEAD' && request.method !== 'OPTIONS';
+    const limiter = isWriteMethod ? writeRateLimiter : edgeRateLimiter;
+    const rateCheck = limiter.check(`${ip}:${isWriteMethod ? 'w' : 'r'}`);
+
     if (!rateCheck.allowed) {
       return new NextResponse(
         JSON.stringify({
@@ -53,25 +57,22 @@ export function proxy(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  // Attach distributed correlation ID for observability
+  // Attach distributed correlation ID
   response.headers.set('x-request-id', requestId);
 
-  // Essential Edge Security Headers
+  // Hardened HTTP Security Headers
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('X-Frame-Options', 'SAMEORIGIN');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), interest-cohort=()');
+  response.headers.set('X-DNS-Prefetch-Control', 'on');
 
   return response;
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, images, logos
-     */
     '/((?!_next/static|_next/image|favicon.ico|images|logos|icons).*)',
   ],
 };

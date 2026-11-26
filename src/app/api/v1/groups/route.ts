@@ -5,13 +5,20 @@ import { validateGroupInviteUrl } from '@/lib/seo-engine';
 
 export const dynamic = 'force-dynamic';
 
+function sanitizeText(val: unknown, maxLen: number): string {
+  return String(val || '')
+    .replace(/[<>]/g, '')
+    .trim()
+    .slice(0, maxLen);
+}
+
 export async function GET(request: NextRequest) {
   const requestId = request.headers.get('x-request-id') || crypto.randomUUID();
   const searchParams = request.nextUrl.searchParams;
 
   const platform = searchParams.get('platform');
   const category = searchParams.get('category');
-  const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 50);
+  const limit = Math.min(Math.max(parseInt(searchParams.get('limit') || '20', 10) || 20, 1), 50);
 
   let list = [...INITIAL_GROUPS];
   if (platform && platform !== 'all') {
@@ -38,18 +45,23 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    if (!body.name || !body.inviteUrl || !body.platform) {
+    const cleanName = sanitizeText(body.name, 160);
+    const cleanPlatform = sanitizeText(body.platform, 30).toLowerCase();
+    const cleanInviteUrl = String(body.inviteUrl || '').trim().slice(0, 500);
+    const cleanCategory = sanitizeText(body.category || 'Technology', 80);
+
+    if (!cleanName || cleanName.length < 3 || !cleanInviteUrl || !cleanPlatform) {
       return NextResponse.json(
         createErrorResponse(
           'VALIDATION_ERROR',
-          'Missing required fields: name, platform, and inviteUrl are mandatory.',
+          'Missing or invalid required fields: name (min 3 chars), platform, and inviteUrl are mandatory.',
           requestId
         ),
         { status: 400 }
       );
     }
 
-    const urlValidation = validateGroupInviteUrl(body.inviteUrl);
+    const urlValidation = validateGroupInviteUrl(cleanInviteUrl);
     if (!urlValidation.valid) {
       return NextResponse.json(
         createErrorResponse(
@@ -64,11 +76,11 @@ export async function POST(request: NextRequest) {
     // Auto-admit directly until manual admin approvals are enabled
     const newGroup = {
       id: `grp-${Date.now()}`,
-      name: body.name,
-      slug: body.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      platform: body.platform,
-      inviteUrl: body.inviteUrl,
-      category: body.category || 'Technology',
+      name: cleanName,
+      slug: cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      platform: cleanPlatform,
+      inviteUrl: cleanInviteUrl,
+      category: cleanCategory,
       status: 'approved',
       memberCount: 1,
       isVerified: true,
