@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { PLAYZONE_GAMES } from '@/lib/games/catalog';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://group-link.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grouphub-eta.vercel.app';
 
 export const metadata: Metadata = {
   title: 'PlayZone – 30+ Free Instant HTML5 Games & Brain Teasers | No Install',

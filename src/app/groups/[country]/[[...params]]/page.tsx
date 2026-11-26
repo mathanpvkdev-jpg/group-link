@@ -23,7 +23,7 @@ interface PageProps {
   }>;
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://group-link.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grouphub-eta.vercel.app';
 
 function resolvePathSegments(countrySlug: string, paramArray: string[]) {
   const countryObj = SAFE_COUNTRIES.find((c) => c.slug === countrySlug);

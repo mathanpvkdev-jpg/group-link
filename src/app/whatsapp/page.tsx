@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import DynamicGeoGroupPage from '../groups/[country]/[[...params]]/page';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://group-link.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grouphub-eta.vercel.app';
 
 export const metadata: Metadata = {
   title: 'WhatsApp Group Links Directory – Active & Verified Communities',

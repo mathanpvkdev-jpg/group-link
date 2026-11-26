@@ -545,6 +545,214 @@ export const INITIAL_GROUPS: Group[] = [
     createdAt: '2026-02-12',
     updatedAt: '2026-10-30',
   },
+  {
+    id: 'demo-009',
+    name: 'Tamil Nadu TNPSC Group 1, 2 & VAO Exam Study Circle',
+    slug: 'tamil-nadu-tnpsc-exam-study-circle',
+    description: 'Daily Tamil medium & bilingual mock tests, Samacheer Kalvi PDF notes, current affairs, and free TNPSC coaching discussions.',
+    platform: 'whatsapp',
+    inviteUrl: 'https://chat.whatsapp.com/sample-tnpsc-tamil-study',
+    country: 'India',
+    countryCode: 'IN',
+    state: 'Tamil Nadu',
+    city: 'Madurai',
+    area: 'Anna Nagar',
+    category: 'Education',
+    language: 'Tamil',
+    memberCount: 12400,
+    imageUrl: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=400&q=80',
+    status: 'approved',
+    isVerified: true,
+    isFeatured: true,
+    lastChecked: '26 November 2026',
+    reportsCount: 0,
+    viewsCount: 19200,
+    clicksCount: 11800,
+    createdAt: '2026-03-01',
+    updatedAt: '2026-11-26',
+  },
+  {
+    id: 'demo-010',
+    name: 'Chennai & Tamil Gamers Arena (BGMI, Free Fire & Valorant)',
+    slug: 'chennai-tamil-gamers-bgmi-valorant',
+    description: 'Tamil gaming squad finder, weekend custom room scrims, esports tournament announcements, and PC/mobile gaming setups.',
+    platform: 'whatsapp',
+    inviteUrl: 'https://chat.whatsapp.com/sample-tamil-gamers-arena',
+    country: 'India',
+    countryCode: 'IN',
+    state: 'Tamil Nadu',
+    city: 'Chennai',
+    area: 'Velachery',
+    category: 'Gaming',
+    language: 'Tamil',
+    memberCount: 8300,
+    imageUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80',
+    status: 'approved',
+    isVerified: true,
+    isFeatured: false,
+    lastChecked: '26 November 2026',
+    reportsCount: 0,
+    viewsCount: 11400,
+    clicksCount: 7200,
+    createdAt: '2026-03-05',
+    updatedAt: '2026-11-26',
+  },
+  {
+    id: 'demo-011',
+    name: 'Kollywood & Tamil Cinema Updates, Music & OTT Reviews',
+    slug: 'kollywood-tamil-cinema-entertainment-hub',
+    description: 'Latest Tamil movie reviews, Ilaiyaraaja & Anirudh music discussions, trailer reactions, and OTT weekend watchlists.',
+    platform: 'telegram',
+    inviteUrl: 'https://t.me/sample_tamil_cinema_club',
+    country: 'India',
+    countryCode: 'IN',
+    state: 'Tamil Nadu',
+    city: 'Chennai',
+    area: 'Kodambakkam',
+    category: 'Entertainment',
+    language: 'Tamil',
+    memberCount: 15800,
+    imageUrl: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=400&q=80',
+    status: 'approved',
+    isVerified: true,
+    isFeatured: false,
+    lastChecked: '26 November 2026',
+    reportsCount: 0,
+    viewsCount: 21500,
+    clicksCount: 14900,
+    createdAt: '2026-03-10',
+    updatedAt: '2026-11-26',
+  },
+  {
+    id: 'demo-012',
+    name: 'Hindi UPSC IAS, SSC CGL & Banking Daily Current Affairs',
+    slug: 'hindi-upsc-ssc-cgl-current-affairs',
+    description: 'Daily Hindi editorial summaries, NCERT notes, PIB updates, and government exam strategy for North & Central India aspirants.',
+    platform: 'telegram',
+    inviteUrl: 'https://t.me/sample_hindi_upsc_ias',
+    country: 'India',
+    countryCode: 'IN',
+    state: 'Delhi',
+    city: 'New Delhi',
+    area: 'Mukherjee Nagar',
+    category: 'Education',
+    language: 'Hindi',
+    memberCount: 34500,
+    imageUrl: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80',
+    status: 'approved',
+    isVerified: true,
+    isFeatured: true,
+    lastChecked: '26 November 2026',
+    reportsCount: 0,
+    viewsCount: 42000,
+    clicksCount: 28900,
+    createdAt: '2026-03-12',
+    updatedAt: '2026-11-26',
+  },
+  {
+    id: 'demo-013',
+    name: 'Mumbai & Delhi Hindi Business Owners, B2B & Startup Hub',
+    slug: 'hindi-business-owners-b2b-startup-hub',
+    description: 'Hindi-first network for wholesalers, GST traders, D2C brand founders, and retail shop owners scaling across Maharashtra, UP & Delhi NCR.',
+    platform: 'whatsapp',
+    inviteUrl: 'https://chat.whatsapp.com/sample-hindi-b2b-traders',
+    country: 'India',
+    countryCode: 'IN',
+    state: 'Maharashtra',
+    city: 'Mumbai',
+    area: 'Andheri',
+    category: 'Business',
+    language: 'Hindi',
+    memberCount: 11200,
+    imageUrl: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=400&q=80',
+    status: 'approved',
+    isVerified: true,
+    isFeatured: false,
+    lastChecked: '26 November 2026',
+    reportsCount: 0,
+    viewsCount: 14800,
+    clicksCount: 9100,
+    createdAt: '2026-03-14',
+    updatedAt: '2026-11-26',
+  },
+  {
+    id: 'demo-014',
+    name: 'Kerala Kochi Startups, IT Jobs & Malayalam Tech Guild',
+    slug: 'kerala-kochi-startups-malayalam-tech',
+    description: 'Connecting Kerala developers, Infopark & Technopark job seekers, digital marketers, and Malayalam startup founders.',
+    platform: 'whatsapp',
+    inviteUrl: 'https://chat.whatsapp.com/sample-malayalam-tech-jobs',
+    country: 'India',
+    countryCode: 'IN',
+    state: 'Kerala',
+    city: 'Kochi',
+    area: 'Kakkanad',
+    category: 'Technology',
+    language: 'Malayalam / English',
+    memberCount: 9600,
+    imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80',
+    status: 'approved',
+    isVerified: true,
+    isFeatured: false,
+    lastChecked: '26 November 2026',
+    reportsCount: 0,
+    viewsCount: 12900,
+    clicksCount: 8100,
+    createdAt: '2026-03-16',
+    updatedAt: '2026-11-26',
+  },
+  {
+    id: 'demo-015',
+    name: 'Hyderabad HITEC City Software Jobs & Telugu Tech Network',
+    slug: 'hyderabad-hitec-city-telugu-tech-jobs',
+    description: 'Verified software engineering referrals, walk-in drives in Madhapur/Gachibowli, and Telugu tech career mentorship.',
+    platform: 'whatsapp',
+    inviteUrl: 'https://chat.whatsapp.com/sample-telugu-hitec-jobs',
+    country: 'India',
+    countryCode: 'IN',
+    state: 'Telangana',
+    city: 'Hyderabad',
+    area: 'Madhapur',
+    category: 'Jobs & Careers',
+    language: 'Telugu / English',
+    memberCount: 18400,
+    imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80',
+    status: 'approved',
+    isVerified: true,
+    isFeatured: true,
+    lastChecked: '26 November 2026',
+    reportsCount: 0,
+    viewsCount: 25400,
+    clicksCount: 17100,
+    createdAt: '2026-03-18',
+    updatedAt: '2026-11-26',
+  },
+  {
+    id: 'demo-016',
+    name: 'Pan-India Remote Tech Jobs, React & AI Engineers (English)',
+    slug: 'pan-india-remote-tech-jobs-english',
+    description: 'Daily remote software job alerts, interview prep, LeetCode DSA study partners, and verified startup referrals across India.',
+    platform: 'whatsapp',
+    inviteUrl: 'https://chat.whatsapp.com/sample-india-remote-jobs',
+    country: 'India',
+    countryCode: 'IN',
+    state: 'Karnataka',
+    city: 'Bengaluru',
+    area: 'HSR Layout',
+    category: 'Jobs & Careers',
+    language: 'English',
+    memberCount: 22100,
+    imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80',
+    status: 'approved',
+    isVerified: true,
+    isFeatured: true,
+    lastChecked: '26 November 2026',
+    reportsCount: 0,
+    viewsCount: 29800,
+    clicksCount: 21400,
+    createdAt: '2026-03-20',
+    updatedAt: '2026-11-26',
+  },
 ];
 
 // 5 PROMOTIONAL BANNERS PROMOTING GROUPHUB BUSINESS
@@ -1660,6 +1868,352 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '20 August 2026',
     imageUrl: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80',
     tags: ['BNI', 'Chennai', 'Business', 'Networking'],
+  },
+  {
+    id: 'blog-07-tamil-whatsapp-groups',
+    title: 'Active Tamil WhatsApp Group Links: Jobs, TNPSC Study & Business (2026)',
+    slug: 'tamil-whatsapp-group-links-jobs-study-business',
+    excerpt: 'Explore verified Tamil WhatsApp communities across Chennai, Coimbatore, Madurai, and Trichy for government exams, IT hiring, and MSME networking.',
+    content: `
+      <h2>Why Regional Tamil Communities Grow Faster</h2>
+      <p>Tamil-speaking professionals, students, and entrepreneurs across Tamil Nadu rely on focused communities for hyper-local updates—whether tracking TNPSC Group 1/2/4 study notes, walk-in interviews on Chennai OMR, or textile sourcing in Tiruppur.</p>
+      <h3>Top Tamil Categories</h3>
+      <ul>
+        <li><strong>TNPSC &amp; Competitive Exams:</strong> Samacheer Kalvi study materials and daily mock quizzes.</li>
+        <li><strong>IT &amp; Freshers Hiring:</strong> Direct HR recruitment alerts across Chennai, Coimbatore, and Bengaluru.</li>
+        <li><strong>Retail &amp; Business Guilds:</strong> Direct B2B trade connections without middlemen.</li>
+      </ul>
+      <p><a href="/india/tamil" class="text-emerald-600 font-bold underline">Browse Live Tamil WhatsApp &amp; Telegram Groups →</a></p>
+    `,
+    category: 'Regional Communities',
+    author: 'GroupHub Editorial',
+    readTime: '5 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
+    tags: ['Tamil', 'TNPSC', 'Chennai Jobs', 'WhatsApp Groups'],
+  },
+  {
+    id: 'blog-08-arattai-vs-whatsapp',
+    title: 'Arattai by Zoho vs WhatsApp: Guide to Indian Made Messaging Communities',
+    slug: 'arattai-groups-vs-whatsapp-india-guide',
+    excerpt: 'Learn how Zoho Arattai channels and groups compare to WhatsApp for Indian creators, SaaS founders, and regional communities.',
+    content: `
+      <h2>Rise of Indigenous Indian Messaging</h2>
+      <p>Built by Zoho in Chennai, Arattai offers lightweight voice calling, crisp group moderation tools, and low-bandwidth optimization ideal for Tier-2 and Tier-3 Indian cities.</p>
+      <h3>Key Advantages for Community Admins</h3>
+      <ul>
+        <li><strong>Zero Forced Bloat:</strong> Clean interface designed around fast mobile data connections.</li>
+        <li><strong>Indian Tech Ecosystem:</strong> Popular among Tamil Nadu SaaS developers, book clubs, and home entrepreneur circles.</li>
+      </ul>
+      <p>Admins can submit their Arattai link directly on <a href="/submit-group" class="text-emerald-600 font-bold underline">GroupHub Submit Form</a> in under 60 seconds.</p>
+    `,
+    category: 'Platforms & Tech',
+    author: 'GroupHub Tech Desk',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80',
+    tags: ['Arattai', 'Zoho', 'WhatsApp', 'India Tech'],
+  },
+  {
+    id: 'blog-09-hindi-upsc-study',
+    title: 'Best Hindi UPSC IAS, SSC CGL & Railway Exam Telegram & WhatsApp Groups',
+    slug: 'hindi-upsc-ssc-study-telegram-whatsapp-groups',
+    excerpt: 'Daily PIB summaries, NCERT revision PDFs, and Hindi-medium civil service aspirant channels across Delhi, UP, Bihar, and Rajasthan.',
+    content: `
+      <h2>Structured Preparation in Hindi Medium</h2>
+      <p>Preparing for UPSC CSE, SSC CGL, or State PCS exams in Hindi becomes easier when you have curated daily editorials, current affairs quizzes, and peer answer-writing review groups.</p>
+      <ul>
+        <li>Verify whether channel PDFs match current syllabus updates.</li>
+        <li>Never pay unknown admins for leaked exam papers—stick to legitimate peer learning.</li>
+      </ul>
+      <p><a href="/india/hindi" class="text-emerald-600 font-bold underline">Explore Verified Hindi Study &amp; Business Groups →</a></p>
+    `,
+    category: 'Education & Study',
+    author: 'GroupHub Study Desk',
+    readTime: '5 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80',
+    tags: ['Hindi', 'UPSC', 'SSC CGL', 'Education'],
+  },
+  {
+    id: 'blog-10-gaming-esports-india',
+    title: 'Active BGMI, Free Fire & Valorant Squad WhatsApp & Discord Groups in India',
+    slug: 'gaming-esports-bgmi-whatsapp-discord-groups-india',
+    excerpt: 'Find active custom room scrims, reliable squad teammates, and weekend esports brackets across India.',
+    content: `
+      <h2>Building Competitive Indian Gaming Squads</h2>
+      <p>Whether you play BGMI, Free Fire Max, or Valorant, finding non-toxic teammates with synced voice comms transforms your rank climb.</p>
+      <h3>Safety Rules for Tournament Groups</h3>
+      <ul>
+        <li>Never share your game account password or OTPs for "free UC/diamonds".</li>
+        <li>Verify organizer track records before paying tournament entry fees.</li>
+      </ul>
+      <p><a href="/india/tamil/gaming" class="text-emerald-600 font-bold underline">Join Verified Gaming Groups →</a> or try instant browser drills in <a href="/games" class="text-blue-600 font-bold underline">PlayZone</a>.</p>
+    `,
+    category: 'Gaming & Esports',
+    author: 'PlayZone Team',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
+    tags: ['BGMI', 'Valorant', 'Free Fire', 'Gaming'],
+  },
+  {
+    id: 'blog-11-list-business-free',
+    title: 'How to List Your Business Online Free Without Broker Commissions on Nammabus',
+    slug: 'how-to-list-business-free-nammabus-india',
+    excerpt: 'Step-by-step guide for Indian shops, clinics, contractors, and freelancers to get direct WhatsApp leads at zero broker cost.',
+    content: `
+      <h2>Why Zero-Commission Local Discovery Matters</h2>
+      <p>Traditional lead aggregators sell the same customer inquiry to five competitors at once. Nammabus connects local buyers directly to your phone and WhatsApp with zero middleman cuts.</p>
+      <ol>
+        <li>Open the <a href="/local-biz/add-business" class="text-blue-600 font-bold underline">Add Business Page</a> (no login required).</li>
+        <li>Fill your Business Name, State, District, Pincode, and WhatsApp contact.</li>
+        <li>Your profile publishes immediately with direct Click-to-Call and WhatsApp inquiry links.</li>
+      </ol>
+    `,
+    category: 'Local Business Growth',
+    author: 'Nammabus Merchant Team',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+    tags: ['Free Listing', 'Nammabus', 'Small Business', 'WhatsApp Leads'],
+  },
+  {
+    id: 'blog-12-ac-techs-electricians',
+    title: 'How to Hire Reliable AC Technicians, Electricians & Plumbers Near You',
+    slug: 'find-verified-ac-technicians-electricians-chennai',
+    excerpt: 'Checklist for inspecting home service pricing, split AC gas refilling rates, and safety before booking repair specialists.',
+    content: `
+      <h2>Transparent Home Maintenance in Indian Cities</h2>
+      <p>Before inviting an AC technician or licensed electrician home, always ask for transparent inspection charges, genuine spare-part warranties, and check customer reviews.</p>
+      <p><a href="/local-biz/professionals" class="text-blue-600 font-bold underline">Find Verified Technicians Near You →</a></p>
+    `,
+    category: 'Home Services',
+    author: 'Nammabus Local Desk',
+    readTime: '5 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80',
+    tags: ['AC Repair', 'Electrician', 'Home Services', 'Chennai'],
+  },
+  {
+    id: 'blog-13-wedding-photographers-caterers',
+    title: 'Hiring Candid Wedding Photographers & Caterers in Tamil Nadu: Budget Guide',
+    slug: 'hire-candid-wedding-photographers-caterers-tamil-nadu',
+    excerpt: 'Plan muhurtham photography packages, 4K drone shoots, and traditional banana-leaf catering directly with verified vendors.',
+    content: `
+      <h2>Direct Vendor Booking Saves 15%–25%</h2>
+      <p>Communicating directly with photography studios and master caterers eliminates agency markups and lets you customize menus, candid albums, and drone coverage clearly.</p>
+      <p><a href="/local-biz/businesses" class="text-blue-600 font-bold underline">Browse Verified Wedding Vendors →</a></p>
+    `,
+    category: 'Events & Weddings',
+    author: 'Nammabus Events',
+    readTime: '5 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80',
+    tags: ['Wedding Photography', 'Catering', 'Tamil Nadu', 'Events'],
+  },
+  {
+    id: 'blog-14-b2b-wholesale-suppliers',
+    title: 'Sourcing From Direct Factory & B2B Wholesale Manufacturers in India',
+    slug: 'direct-b2b-wholesale-suppliers-india-manufacturers',
+    excerpt: 'How Indian retailers and MSMEs verify GSTIN numbers, negotiate factory MOQs, and source packaging, solar, and textiles directly.',
+    content: `
+      <h2>Direct Factory Procurement Guide</h2>
+      <p>Sourcing directly from industrial hubs like Peenya (Bengaluru), Guindy (Chennai), Tiruppur, and Bhiwandi boosts retail margins while ensuring consistent quality.</p>
+      <p><a href="/b2b" class="text-blue-600 font-bold underline">Explore Verified B2B Wholesale Directory →</a></p>
+    `,
+    category: 'B2B Marketplace',
+    author: 'Nammabus B2B',
+    readTime: '6 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
+    tags: ['B2B', 'Wholesale', 'GSTIN', 'Manufacturers'],
+  },
+  {
+    id: 'blog-15-direct-whatsapp-leads',
+    title: 'How Local Shops Convert Online Directory Views into Direct WhatsApp Leads',
+    slug: 'how-local-shops-get-direct-whatsapp-leads',
+    excerpt: 'Optimize your shop description, city keywords, and WhatsApp Business catalog to win daily local walk-ins and quote requests.',
+    content: `
+      <h2>Turning Searchers into Paying Customers</h2>
+      <p>Include your exact locality (e.g., T. Nagar, Anna Nagar, HSR Layout), clear product pricing ranges, and fast WhatsApp reply greetings so buyers book with confidence.</p>
+    `,
+    category: 'Local Business Growth',
+    author: 'Nammabus Growth',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=800&q=80',
+    tags: ['WhatsApp Business', 'Local SEO', 'Leads'],
+  },
+  {
+    id: 'blog-16-solar-rooftop-india',
+    title: 'Commercial & Residential Rooftop Solar Installers in India: Subsidy & ROI Guide',
+    slug: 'solar-rooftop-installers-commercial-india-guide',
+    excerpt: 'Understand net metering, kW sizing for factories and homes, and how to compare MNRE-compliant solar EPC contractors.',
+    content: `
+      <h2>Cutting Electricity Bills by 60%–80%</h2>
+      <p>With high solar irradiance across Tamil Nadu, Karnataka, Gujarat, and Rajasthan, rooftop solar installations typically reach payback in 3 to 4 years.</p>
+    `,
+    category: 'Green Energy & B2B',
+    author: 'Nammabus B2B',
+    readTime: '5 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80',
+    tags: ['Solar Power', 'Net Metering', 'Commercial Solar'],
+  },
+  {
+    id: 'blog-17-tiruppur-textile-sourcing',
+    title: 'Tiruppur Cotton Knitwear & Export Garment Wholesale Sourcing Checklist',
+    slug: 'textile-garment-wholesale-manufacturers-tiruppur',
+    excerpt: 'A buyer guide to GSM fabric grades, combed cotton vs bio-wash tees, and minimum order quantities in Tiruppur.',
+    content: `
+      <h2>India Knitwear Capital Procurement</h2>
+      <p>Whether ordering 500 corporate event t-shirts or launching a D2C apparel line, verify fabric GSM samples, screen/DTF print durability, and dispatch timelines directly with Tiruppur factories.</p>
+    `,
+    category: 'Textiles & B2B',
+    author: 'Nammabus Trade Desk',
+    readTime: '5 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=80',
+    tags: ['Tiruppur', 'Apparel', 'Wholesale Cotton'],
+  },
+  {
+    id: 'blog-18-packers-movers-safety',
+    title: 'Safe Household Shifting: How to Choose Verified Packers & Movers in India',
+    slug: 'packers-movers-logistics-verified-guide-india',
+    excerpt: 'Avoid hidden transit charges and damaged furniture by checking GST bills, transit insurance, and written packing inventories.',
+    content: `
+      <h2>Checklist Before Booking Shifting Services</h2>
+      <p>Always request a pre-move survey video estimate, verify the agency GSTIN and physical office address, and confirm multi-layer bubble + corrugated wrapping for appliances.</p>
+    `,
+    category: 'Logistics & Relocation',
+    author: 'Nammabus Local Desk',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+    tags: ['Packers and Movers', 'Relocation', 'Logistics'],
+  },
+  {
+    id: 'blog-19-2048-corner-strategy',
+    title: 'How to Beat 2048: The Corner Method Strategy for 3x3, 4x4 & 5x5 Grids',
+    slug: '2048-game-winning-strategy-corner-method-guide',
+    excerpt: 'Master tile placement, monotonic snake chains, and avoid deadlocks to reach the 2048 and 4096 tiles effortlessly.',
+    content: `
+      <h2>The Golden Corner Strategy</h2>
+      <p>Keep your highest-value tile locked in one chosen corner (such as bottom-left) and only swipe horizontally or downward unless forced. Never swipe upward if your bottom row isn't full!</p>
+      <p><a href="/games" class="text-purple-600 font-bold underline">Play 2048 (3x3, 4x4 &amp; 5x5) Free in PlayZone →</a></p>
+    `,
+    category: 'PlayZone & Brain Games',
+    author: 'PlayZone Editorial',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=800&q=80',
+    tags: ['2048 Game', 'Puzzle Strategy', 'PlayZone'],
+  },
+  {
+    id: 'blog-20-mental-math-sprint',
+    title: 'Speed Up Mental Math Calculations for Bank PO, CAT & SSC Quantitative Aptitude',
+    slug: 'improve-mental-math-speed-competitive-exams',
+    excerpt: 'Daily 60-second arithmetic drills sharpen addition, percentage shortcuts, and rapid multiplication accuracy.',
+    content: `
+      <h2>Why Timed Micro-Drills Boost Exam Scores</h2>
+      <p>Practicing 60-second timed arithmetic sprints builds automatic number sense, freeing up mental bandwidth for complex data interpretation problems during exams.</p>
+      <p><a href="/games" class="text-purple-600 font-bold underline">Try Mental Math Sprint (60s) Now →</a></p>
+    `,
+    category: 'PlayZone & Brain Games',
+    author: 'PlayZone Editorial',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80',
+    tags: ['Mental Math', 'Quantitative Aptitude', 'Brain Games'],
+  },
+  {
+    id: 'blog-21-schulte-grid-science',
+    title: 'What Is a Schulte Grid? Science of Peripheral Vision & Concentration Training',
+    slug: 'schulte-table-peripheral-vision-speed-reading',
+    excerpt: 'Discover how sequential 1-to-16 visual scanning accelerates reading speed and visual focus in students and professionals.',
+    content: `
+      <h2>Train Eyes &amp; Focus in 60 Seconds</h2>
+      <p>Fix your gaze near the center of the 4x4 grid and tap numbers 1 through 16 sequentially using peripheral awareness rather than jumping your eyes across every cell.</p>
+      <p><a href="/games" class="text-purple-600 font-bold underline">Play Count Serial Numbers (Schulte Grid) →</a></p>
+    `,
+    category: 'PlayZone & Brain Games',
+    author: 'PlayZone Editorial',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
+    tags: ['Schulte Grid', 'Focus Training', 'Speed Reading'],
+  },
+  {
+    id: 'blog-22-no-install-browser-games',
+    title: 'Best Free No-Install Browser Games for Quick 2-Minute Breaks on Mobile',
+    slug: 'best-free-no-install-browser-games-mobile',
+    excerpt: 'Zero app downloads, zero heavy battery drain, and instant local high-score tracking directly inside your phone browser.',
+    content: `
+      <h2>Lightweight HTML5 Games Built for Indian Mobile Networks</h2>
+      <p>PlayZone games run 100% locally in your browser without heavy video ads or 200 MB downloads—ideal for quick breaks between work or study sessions.</p>
+      <p><a href="/games" class="text-purple-600 font-bold underline">Open PlayZone Game Arcade →</a></p>
+    `,
+    category: 'PlayZone & Brain Games',
+    author: 'PlayZone Team',
+    readTime: '3 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
+    tags: ['Browser Games', 'No Install', 'Mobile Games'],
+  },
+  {
+    id: 'blog-23-spot-fake-job-scams',
+    title: 'How to Spot Fake Job & Loan Scams on WhatsApp and Telegram Groups (Safety Guide)',
+    slug: 'how-to-spot-fake-job-scams-whatsapp-telegram',
+    excerpt: 'Protect yourself from upfront "security deposit" scams, phishing APK links, and fake task-based Telegram frauds.',
+    content: `
+      <h2>5 Red Flags Every Job Seeker Must Know</h2>
+      <ul>
+        <li>Legitimate Indian companies and HRs <strong>never</strong> charge interview registration fees or laptop deposits.</li>
+        <li>Never download random <code>.apk</code> files shared in unknown chat groups.</li>
+        <li>Verify recruiter emails against official company domains before sharing Aadhaar/PAN copies.</li>
+      </ul>
+    `,
+    category: 'Trust & Safety',
+    author: 'GroupHub Safety Team',
+    readTime: '5 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80',
+    tags: ['Job Safety', 'Anti-Scam', 'Cyber Safety'],
+  },
+  {
+    id: 'blog-24-whatsapp-admin-revoke-guide',
+    title: 'WhatsApp Group Admin Handbook: Revoke Invite Links & Stop Auto-Spam Bots',
+    slug: 'whatsapp-group-admin-guide-revoke-spam-protection',
+    excerpt: 'Essential privacy settings, Approve New Members toggle, and link-reset controls every community admin should enable.',
+    content: `
+      <h2>Stay in Full Control of Your Community</h2>
+      <p>Enable <strong>Approve New Members</strong> in WhatsApp Group Settings when running tight regional groups, and use <strong>Reset Invite Link</strong> instantly whenever bots flood your chat.</p>
+      <p><a href="/submit-group" class="text-emerald-600 font-bold underline">Submit Your Verified Community Link →</a></p>
+    `,
+    category: 'Community Admin Guides',
+    author: 'GroupHub Editorial',
+    readTime: '4 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80',
+    tags: ['WhatsApp Admin', 'Moderation', 'Invite Links'],
+  },
+  {
+    id: 'blog-25-local-citations-google-maps',
+    title: 'Why Verified Local Business Directories Boost Your Google Maps Visibility',
+    slug: 'seo-growth-for-indian-small-businesses-directories',
+    excerpt: 'Consistent Name, Address, and Phone (NAP) listings across trusted Indian directories strengthen local search authority.',
+    content: `
+      <h2>The Power of Consistent Local NAP Signals</h2>
+      <p>When Google crawls consistent Name, Address, Phone, and Service descriptions on authoritative regional directories like Nammabus, your Google Business Profile gains stronger local trust signals for "near me" searches.</p>
+      <p><a href="/local-biz/add-business" class="text-blue-600 font-bold underline">Add Your Free Business Listing Today →</a></p>
+    `,
+    category: 'Digital Marketing & SEO',
+    author: 'Nammabus SEO Desk',
+    readTime: '5 min read',
+    publishedAt: '26 November 2026',
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    tags: ['Local SEO', 'Google Maps', 'Small Business'],
   },
 ];
 

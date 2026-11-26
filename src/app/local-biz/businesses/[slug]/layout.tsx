@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { SEED_BUSINESSES } from '@/lib/local-biz/seed-data';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://group-link.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grouphub-eta.vercel.app';
 
 interface BusinessLayoutProps {
   children: React.ReactNode;

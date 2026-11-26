@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://group-link.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grouphub-eta.vercel.app';
 
 export const metadata: Metadata = {
   title: 'Free Directory Listing & Founding Member Packages | Nammabus India',
